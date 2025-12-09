@@ -1,0 +1,68 @@
+{
+  "name": "Product",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Nama produk furniture laboratorium"
+    },
+    "slug": {
+      "type": "string",
+      "description": "URL slug produk"
+    },
+    "description": {
+      "type": "string",
+      "description": "Deskripsi lengkap produk"
+    },
+    "short_description": {
+      "type": "string",
+      "description": "Deskripsi singkat produk"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "URL gambar produk"
+    },
+    "base_price": {
+      "type": "number",
+      "description": "Harga dasar produk"
+    },
+    "materials": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Pilihan material tersedia"
+    },
+    "sizes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Pilihan ukuran tersedia"
+    },
+    "colors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Pilihan warna tersedia"
+    },
+    "features": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Fitur-fitur produk"
+    },
+    "category": {
+      "type": "string",
+      "description": "Kategori produk"
+    }
+  },
+  "required": [
+    "name",
+    "slug",
+    "description",
+    "base_price"
+  ]
+}
