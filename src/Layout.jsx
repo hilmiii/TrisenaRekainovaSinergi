@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { base44 } from '@/api/base44Client';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
-import CartDrawer from '@/components/cart/CartDrawer';
-import WhatsAppButton from '@/components/ui/WhatsAppButton';
+import { base44 } from './api/base44Client';
+import Header from './components/layout/Header';
+import Footer from './components/layout/Footer';
+import CartDrawer from './components/cart/CartDrawer';
+import WhatsAppButton from './components/ui/WhatsAppButton';
 
 export default function Layout({ children, currentPageName }) {
   const [user, setUser] = useState(null);

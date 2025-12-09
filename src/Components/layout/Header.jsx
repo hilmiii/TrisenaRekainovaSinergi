@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { createPageUrl } from '../../utils';
-import { Button } from '@/components/ui/button';
+// import { Button } from '@/components/ui/button';
 import { ShoppingCart, Menu, X, User, Beaker, LogOut } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -67,7 +67,7 @@ export default function Header({ cartItemCount, onCartClick, user, onLogout }) {
 
           {/* Actions */}
           <div className="flex items-center gap-3">
-            <button
+            {/* <button
               onClick={onCartClick}
               className="relative p-2 hover:bg-gray-100 rounded-full transition-colors"
             >
@@ -77,38 +77,38 @@ export default function Header({ cartItemCount, onCartClick, user, onLogout }) {
                   {cartItemCount}
                 </span>
               )}
-            </button>
+            </button> */}
 
             {user ? (
               <div className="hidden sm:flex items-center gap-2">
                 <span className="text-sm text-gray-600">{user.full_name}</span>
                 {user.is_admin && (
                   <Link to={createPageUrl('AdminDashboard')}>
-                    <Button variant="outline" size="sm">
+                    {/* <Button variant="outline" size="sm">
                       Dashboard
-                    </Button>
+                    </Button> */}
                   </Link>
                 )}
-                <Button
+                {/* <Button
                   variant="ghost"
                   size="sm"
                   onClick={onLogout}
                   className="text-gray-600"
                 >
                   <LogOut className="w-4 h-4" />
-                </Button>
+                </Button> */}
               </div>
             ) : (
               <Link to={createPageUrl('Login')} className="hidden sm:block">
-                <Button variant="outline" className="gap-2">
+                {/* <Button variant="outline" className="gap-2">
                   <User className="w-4 h-4" />
                   Masuk
-                </Button>
+                </Button> */}
               </Link>
             )}
 
             {/* Mobile Menu Toggle */}
-            <button
+            {/* <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="lg:hidden p-2 hover:bg-gray-100 rounded-full transition-colors"
             >
@@ -117,7 +117,7 @@ export default function Header({ cartItemCount, onCartClick, user, onLogout }) {
               ) : (
                 <Menu className="w-6 h-6 text-gray-700" />
               )}
-            </button>
+            </button> */}
           </div>
         </div>
       </div>
@@ -162,7 +162,7 @@ export default function Header({ cartItemCount, onCartClick, user, onLogout }) {
                       Dashboard Admin
                     </Link>
                   )}
-                  <button
+                  {/* <button
                     onClick={() => {
                       onLogout();
                       setIsMobileMenuOpen(false);
@@ -170,7 +170,7 @@ export default function Header({ cartItemCount, onCartClick, user, onLogout }) {
                     className="block w-full py-3 px-4 text-left text-red-600 hover:bg-red-50 rounded-lg font-medium"
                   >
                     Keluar
-                  </button>
+                  </button> */}
                 </>
               )}
             </nav>

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Input } from '@/components/ui/input';
+import { Button } from './src/Components/ui/button';
+import { Label } from './src/Components/ui/label';
+import { Textarea } from './src/Components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './src/Components/ui/select';
+import { Input } from './src/Components/ui/input';
 import { ShoppingCart, Check, Package, Ruler, Palette, Layers } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
