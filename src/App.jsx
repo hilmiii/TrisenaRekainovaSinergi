@@ -3,10 +3,10 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // Provider untuk Notifikasi
-// import { ToasterProvider } from './components/ui/toaster';
+import { ToasterProvider } from '@/components/ui/toaster';
 
 // Layout
-import Layout from './Layout';
+import Layout from '@/Layout';
 
 // Pages
 import Home from '@/Pages/Home';
@@ -20,8 +20,8 @@ import AdminLogin from '@/Pages/AdminLogin';
 import AdminDashboard from '@/Pages/AdminDashboard';
 
 // Styles
-import './index.css';
-import './App.css';
+import '@/index.css';
+import '@/App.css';
 
 const queryClient = new QueryClient({
   defaultOptions: {
