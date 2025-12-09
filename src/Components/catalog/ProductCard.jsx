@@ -67,7 +67,7 @@ export default function ProductCard({ product, index }) {
             <meta itemProp="priceCurrency" content="IDR" />
           </div>
           <Link
-            to={createPageUrl(`ProductDetail?id=${product.id}`)}
+            to={`/product/${product.id}`} // Langsung ke URL dinamis
             className="flex items-center gap-2 text-teal-600 font-semibold hover:gap-3 transition-all"
           >
             Lihat Detail

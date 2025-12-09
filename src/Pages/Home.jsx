@@ -2,6 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
 import { motion } from 'framer-motion';
+import lemariAsamImg from '@/assets/img/lemariAsam.jpg';
+import laminarAirFlowImg from '@/assets/img/laminarAirFlow.jpg';
+import fumeHoodImg from '@/assets/img/fumeHood.jpg';
 import { 
   ArrowRight, 
   Beaker, 
@@ -12,7 +15,7 @@ import {
   Phone,
   MessageCircle
 } from 'lucide-react';
-import { Button } from '../components/ui/button';
+import { Button } from '@/components/ui/button';
 
 export default function Home() {
   const products = [
@@ -20,21 +23,21 @@ export default function Home() {
       name: "Lemari Asam Prosafeaire",
       subtitle: "Multipurpose Fume Hood",
       description: "Lemari asam berkualitas tinggi dengan sistem ventilasi canggih untuk keamanan laboratorium kimia Anda",
-      image: "https://images.unsplash.com/photo-1582719471384-894fbb16e074?w=600",
+      image : lemariAsamImg,
       features: ["Sistem Exhaust Optimal", "Material Tahan Korosi", "Desain Ergonomis"]
     },
     {
       name: "Laminar Air Flow Prosafeaire",
       subtitle: "Clean Bench System",
       description: "Meja kerja steril dengan aliran udara laminar untuk kemurnian sampel laboratorium maksimal",
-      image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=600",
+      image: laminarAirFlowImg,
       features: ["HEPA Filter Grade H14", "UV Sterilization", "Low Noise Operation"]
     },
     {
       name: "Fume Hood Scrubber Prosafeaire",
       subtitle: "Air Purification System",
       description: "Sistem scrubber handal untuk menyaring udara buangan lemari asam dan menjaga lingkungan",
-      image: "https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?w=600",
+      image: fumeHoodImg,
       features: ["Multi-Stage Filtration", "Chemical Neutralizer", "Eco-Friendly"]
     }
   ];
@@ -49,7 +52,7 @@ export default function Home() {
   return (
     <div className="overflow-hidden pt-20">
       {/* Hero Section */}
-      <section className="relative min-h-[80vh] flex items-center bg-gradient-to-br from-gray-900 via-gray-800 to-teal-900">
+      <section className="relative min-h-[80vh] flex items-center bg-gradient-to-br from-gray-900 via-gray-800 to-cyan-900">
         <div className="absolute inset-0 opacity-20">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(20,184,166,0.3),transparent_50%)]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(20,184,166,0.2),transparent_50%)]" />
@@ -62,11 +65,11 @@ export default function Home() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <span className="inline-block bg-teal-500/20 text-teal-400 px-4 py-2 rounded-full text-sm font-medium mb-6">
+              <span className="inline-block bg-cyan-500/20 text-cyan-400 px-4 py-2 rounded-full text-sm font-medium mb-6">
                 PT. Trisena Rekainova Sinergi
               </span>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
-                Furniture <span className="text-teal-400">Laboratorium</span> Berkualitas Tinggi
+                Furniture <span className="text-cyan-500">Laboratorium</span> Berkualitas Tinggi
               </h1>
               <p className="text-xl text-gray-300 mb-8 leading-relaxed">
                 Produsen Lemari Asam, Laminar Air Flow, dan Fume Hood Scrubber terpercaya 
@@ -74,7 +77,7 @@ export default function Home() {
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link to={createPageUrl('Catalog')}>
-                  <Button size="lg" className="bg-teal-500 hover:bg-teal-600 text-lg px-8 h-14">
+                  <Button size="lg" className="bg-cyan-600 hover:bg-cyan-600 text-lg px-8 h-14">
                     Lihat Katalog
                     <ArrowRight className="ml-2 w-5 h-5" />
                   </Button>
@@ -95,7 +98,7 @@ export default function Home() {
               className="relative hidden lg:block"
             >
               <div className="relative">
-                <div className="absolute -inset-4 bg-teal-500/20 rounded-3xl blur-2xl" />
+                <div className="absolute -inset-4 bg-cyan-500/20 rounded-3xl blur-2xl" />
                 <img
                   src="https://images.unsplash.com/photo-1582719471384-894fbb16e074?w=800"
                   alt="Lemari Asam Prosafeaire - Fume Hood Laboratorium"
@@ -104,8 +107,8 @@ export default function Home() {
               </div>
               <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-xl shadow-xl">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center">
-                    <Shield className="w-6 h-6 text-teal-600" />
+                  <div className="w-12 h-12 bg-cyan-100 rounded-full flex items-center justify-center">
+                    <Shield className="w-6 h-6 text-cyan-600" />
                   </div>
                   <div>
                     <p className="font-bold text-gray-900">Garansi Produk</p>
@@ -131,7 +134,7 @@ export default function Home() {
                 transition={{ delay: index * 0.1 }}
                 className="text-center"
               >
-                <p className="text-4xl md:text-5xl font-bold text-teal-600">{stat.number}</p>
+                <p className="text-4xl md:text-5xl font-bold text-cyan-600">{stat.number}</p>
                 <p className="text-gray-600 mt-2">{stat.label}</p>
               </motion.div>
             ))}
@@ -148,7 +151,7 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <span className="text-teal-600 font-semibold tracking-wider uppercase text-sm">
+            <span className="text-cyan-600 font-semibold tracking-wider uppercase text-sm">
               Produk Unggulan
             </span>
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mt-3 mb-4">
@@ -180,7 +183,7 @@ export default function Home() {
                   />
                 </div>
                 <div className="p-6">
-                  <span className="text-xs text-teal-600 font-semibold uppercase tracking-wider">
+                  <span className="text-xs text-cyan-600 font-semibold uppercase tracking-wider">
                     {product.subtitle}
                   </span>
                   <h3 className="text-xl font-bold text-gray-900 mt-2 mb-3" itemProp="name">
@@ -192,14 +195,14 @@ export default function Home() {
                   <ul className="space-y-2 mb-6">
                     {product.features.map((feature) => (
                       <li key={feature} className="flex items-center gap-2 text-sm text-gray-600">
-                        <CheckCircle className="w-4 h-4 text-teal-500" />
+                        <CheckCircle className="w-4 h-4 text-cyan-500" />
                         {feature}
                       </li>
                     ))}
                   </ul>
                   <Link 
                     to={createPageUrl('Catalog')}
-                    className="inline-flex items-center text-teal-600 font-semibold hover:gap-3 transition-all"
+                    className="inline-flex items-center text-cyan-600 font-semibold hover:gap-3 transition-all"
                   >
                     Lihat Detail
                     <ArrowRight className="ml-2 w-4 h-4" />
@@ -220,7 +223,7 @@ export default function Home() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <span className="text-teal-600 font-semibold tracking-wider uppercase text-sm">
+              <span className="text-cyan-600 font-semibold tracking-wider uppercase text-sm">
                 Mengapa Memilih Kami
               </span>
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mt-3 mb-6">
@@ -247,8 +250,8 @@ export default function Home() {
                     transition={{ delay: index * 0.1 }}
                     className="flex gap-4"
                   >
-                    <div className="w-12 h-12 bg-teal-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <item.icon className="w-6 h-6 text-teal-600" />
+                    <div className="w-12 h-12 bg-cyan-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <item.icon className="w-6 h-6 text-cyan-600" />
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900">{item.title}</h3>
@@ -270,9 +273,9 @@ export default function Home() {
                 alt="Laminar Air Flow - Laboratorium Modern"
                 className="rounded-2xl shadow-xl"
               />
-              <div className="absolute -bottom-8 -right-8 bg-teal-600 text-white p-8 rounded-2xl hidden lg:block">
+              <div className="absolute -bottom-8 -right-8 bg-cyan-600 text-white p-8 rounded-2xl hidden lg:block">
                 <p className="text-4xl font-bold">15+</p>
-                <p className="text-teal-100">Tahun Pengalaman</p>
+                <p className="text-cyan-100">Tahun Pengalaman</p>
               </div>
             </motion.div>
           </div>
@@ -280,7 +283,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-teal-600 to-teal-700">
+      <section className="py-20 bg-gradient-to-br from-cyan-600 to-cyan-700">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -290,13 +293,13 @@ export default function Home() {
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
               Siap Membangun Laboratorium Impian Anda?
             </h2>
-            <p className="text-xl text-teal-100 mb-8">
+            <p className="text-xl text-cyan-100 mb-8">
               Konsultasikan kebutuhan lemari asam, laminar air flow, dan furniture laboratorium 
               lainnya dengan tim ahli kami secara gratis.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link to={createPageUrl('Catalog')}>
-                <Button size="lg" className="bg-white text-teal-600 hover:bg-gray-100 text-lg px-8 h-14">
+                <Button size="lg" className="bg-white text-cyan-600 hover:bg-gray-100 text-lg px-8 h-14">
                   Lihat Katalog Produk
                 </Button>
               </Link>

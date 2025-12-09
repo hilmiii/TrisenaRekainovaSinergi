@@ -1,8 +1,8 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { base44 } from '../api/base44Client';
-import { Link } from 'react-router-dom';
-import { createPageUrl } from '../utils';
+import { base44 } from '@/api/base44Client';
+import { Link, useParams } from 'react-router-dom'; // <--- Perbaikan di sini (tambahkan useParams)
+import { createPageUrl } from '@/utils';
 import { motion } from 'framer-motion';
 import { 
   ArrowLeft, 
@@ -15,18 +15,22 @@ import {
   Award,
   Clock
 } from 'lucide-react';
-import { Button } from '../components/ui/button';
-import { Skeleton } from '../components/ui/skeleton';
-import { Badge } from '../components/ui/badge';
-import ProductCustomizer from '../components/catalog/ProductCustomizer';
+import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Badge } from '@/components/ui/badge';
+import ProductCustomizer from '@/components/catalog/ProductCustomizer';
 
 export default function ProductDetail() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const productId = urlParams.get('id');
+  const { id } = useParams(); // Sekarang ini akan berfungsi
+
+  // Fallback jika ID tidak ada (misal diakses via query string lama)
+  const queryParams = new URLSearchParams(window.location.search);
+  const productId = id || queryParams.get('id');
 
   const { data: product, isLoading } = useQuery({
     queryKey: ['product', productId],
     queryFn: async () => {
+      // Pastikan filter menggunakan ID yang benar
       const products = await base44.entities.Product.filter({ id: productId });
       return products[0];
     },

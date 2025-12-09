@@ -1,4 +1,7 @@
 // src/api/base44Client.js
+import lemariAsamImg from '@/assets/img/lemariAsam.jpg';
+import laminarAirFlowImg from '@/assets/img/laminarAirFlow.jpg';
+import fumeHoodImg from '@/assets/img/fumeHood.jpg';
 
 // Mock Data Produk
 const MOCK_PRODUCTS = [
@@ -7,7 +10,7 @@ const MOCK_PRODUCTS = [
     name: "Lemari Asam Prosafeaire",
     description: "Lemari asam (Fume Hood) berkualitas tinggi standar ISO.",
     short_description: "Fume Hood pelindung operator dari uap berbahaya.",
-    image_url: "https://images.unsplash.com/photo-1582719471384-894fbb16e074?w=600",
+    image_url: lemariAsamImg,
     base_price: 25000000,
     category: "fume_hood",
     materials: ["Multiplex 18mm", "Stainless Steel 304", "Polypropylene"],
@@ -20,14 +23,27 @@ const MOCK_PRODUCTS = [
     name: "Laminar Air Flow",
     description: "Meja kerja steril untuk inokulasi mikrobiologi.",
     short_description: "Clean bench sterile work area.",
-    image_url: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=600",
+    image_url: laminarAirFlowImg,
     base_price: 18500000,
     category: "laminar_flow",
     materials: ["Steel Powder Coating", "Stainless Steel 304"],
     sizes: ["1200 mm", "1500 mm"],
     colors: ["White"],
     features: ["HEPA Filter H14", "UV Lamp", "Air Velocity Display"]
-  }
+  },
+  {
+    id: "3",
+    name: "Fume Hood Scrubber Prosafeaire",
+    description: "Sistem penyaring udara buangan lemari asam untuk menjaga kualitas udara lingkungan.",
+    short_description: "Air Purification System.",
+    image_url: fumeHoodImg,
+    base_price: 20500000,
+    category: "fume_hood",
+    materials: ["Steel Powder Coating", "Stainless Steel 304"],
+    sizes: ["1200 mm", "1500 mm"],
+    colors: ["White"],
+    features: ["HEPA Filter H14", "UV Lamp", "Air Velocity Display"]
+  },
 ];
 
 // Helper untuk simulasi delay network

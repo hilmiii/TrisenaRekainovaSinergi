@@ -11,7 +11,7 @@ export default function Footer() {
           {/* Company Info */}
           <div className="lg:col-span-2">
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 bg-gradient-to-br from-teal-400 to-teal-600 rounded-xl flex items-center justify-center">
+              <div className="w-12 h-12 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-xl flex items-center justify-center">
                 <Beaker className="w-7 h-7 text-white" />
               </div>
               <div>
@@ -25,13 +25,13 @@ export default function Footer() {
               dan Fume Hood Scrubber Prosafeaire untuk memenuhi standar Good Laboratory Practice.
             </p>
             <div className="flex gap-4">
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-800 hover:bg-teal-600 rounded-full flex items-center justify-center transition-colors">
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-800 hover:bg-cyan-600 rounded-full flex items-center justify-center transition-colors">
                 <Facebook className="w-5 h-5" />
               </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-800 hover:bg-teal-600 rounded-full flex items-center justify-center transition-colors">
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-800 hover:bg-cyan-600 rounded-full flex items-center justify-center transition-colors">
                 <Instagram className="w-5 h-5" />
               </a>
-              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-800 hover:bg-teal-600 rounded-full flex items-center justify-center transition-colors">
+              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-800 hover:bg-cyan-600 rounded-full flex items-center justify-center transition-colors">
                 <Youtube className="w-5 h-5" />
               </a>
             </div>
@@ -42,27 +42,27 @@ export default function Footer() {
             <h4 className="text-lg font-semibold mb-6">Produk Laboratorium</h4>
             <ul className="space-y-3 text-gray-400">
               <li>
-                <Link to={createPageUrl('Catalog')} className="hover:text-teal-400 transition-colors">
+                <Link to={createPageUrl('Catalog')} className="hover:text-cyan-400 transition-colors">
                   Lemari Asam Prosafeaire
                 </Link>
               </li>
               <li>
-                <Link to={createPageUrl('Catalog')} className="hover:text-teal-400 transition-colors">
+                <Link to={createPageUrl('Catalog')} className="hover:text-cyan-400 transition-colors">
                   Laminar Air Flow Prosafeaire
                 </Link>
               </li>
               <li>
-                <Link to={createPageUrl('Catalog')} className="hover:text-teal-400 transition-colors">
+                <Link to={createPageUrl('Catalog')} className="hover:text-cyan-400 transition-colors">
                   Fume Hood Scrubber Prosafeaire
                 </Link>
               </li>
               <li>
-                <Link to={createPageUrl('Catalog')} className="hover:text-teal-400 transition-colors">
+                <Link to={createPageUrl('Catalog')} className="hover:text-cyan-400 transition-colors">
                   Furnitur Lab Prosafeaire
                 </Link>
               </li>
               <li>
-                <Link to={createPageUrl('Catalog')} className="hover:text-teal-400 transition-colors">
+                <Link to={createPageUrl('Catalog')} className="hover:text-cyan-400 transition-colors">
                   Meja Laboratorium
                 </Link>
               </li>
@@ -74,21 +74,21 @@ export default function Footer() {
             <h4 className="text-lg font-semibold mb-6">Hubungi Kami</h4>
             <ul className="space-y-4 text-gray-400">
               <li className="flex items-start gap-3" itemProp="address" itemScope itemType="https://schema.org/PostalAddress">
-                <MapPin className="w-5 h-5 text-teal-400 flex-shrink-0 mt-0.5" />
+                <MapPin className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
                 <span itemProp="streetAddress">
                   Jalan Raya Tapos No. 57, Tapos<br />
                   Kota Depok, Jawa Barat, Indonesia
                 </span>
               </li>
               <li>
-                <a href="tel:+6281298229897" className="flex items-center gap-3 hover:text-teal-400 transition-colors">
-                  <Phone className="w-5 h-5 text-teal-400" />
+                <a href="tel:+6281298229897" className="flex items-center gap-3 hover:text-cyan-400 transition-colors">
+                  <Phone className="w-5 h-5 text-cyan-400" />
                   <span itemProp="telephone">+62 812 9822 9897</span>
                 </a>
               </li>
               <li>
-                <a href="mailto:marketing@lemari-asam.id" className="flex items-center gap-3 hover:text-teal-400 transition-colors">
-                  <Mail className="w-5 h-5 text-teal-400" />
+                <a href="mailto:marketing@lemari-asam.id" className="flex items-center gap-3 hover:text-cyan-400 transition-colors">
+                  <Mail className="w-5 h-5 text-cyan-400" />
                   <span itemProp="email">marketing@lemari-asam.id</span>
                 </a>
               </li>
@@ -97,9 +97,9 @@ export default function Footer() {
                   href="https://wa.me/6281298229897" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 hover:text-teal-400 transition-colors"
+                  className="flex items-center gap-3 hover:text-cyan-400 transition-colors"
                 >
-                  <MessageCircle className="w-5 h-5 text-teal-400" />
+                  <MessageCircle className="w-5 h-5 text-cyan-400" />
                   WhatsApp: +62 812 9822 9897
                 </a>
               </li>

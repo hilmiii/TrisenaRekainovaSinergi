@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -8,8 +6,19 @@
   font-weight: 400;
 }
 
+/* Tambahkan reset ini agar full width */
 body {
   margin: 0;
-  min-width: 320px;
+  padding: 0;
+  min-width: 100vw;
   min-height: 100vh;
+  overflow-x: hidden; /* Mencegah scroll samping tak perlu */
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  text-align: left; /* Kembalikan text align ke kiri */
 }
