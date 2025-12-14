@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // Provider untuk Notifikasi
-import { ToasterProvider } from '@/components/ui/toaster';
+import { ToasterProvider } from '@/Components/ui/toaster';
 
 // Layout
 import Layout from '@/Layout';
