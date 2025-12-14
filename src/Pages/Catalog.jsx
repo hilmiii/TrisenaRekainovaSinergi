@@ -3,9 +3,9 @@ import { useQuery } from '@tanstack/react-query';
 import { base44 } from '../api/base44Client';
 import { motion } from 'framer-motion';
 import { Search, Filter, Beaker } from 'lucide-react';
-import { Input } from '@/components/ui/input';
-import { Skeleton } from '@/components/ui/skeleton';
-import ProductCard from '@/components/catalog/ProductCard';
+import { Input } from '@/Components/ui/input';
+import { Skeleton } from '@/Components/ui/skeleton';
+import ProductCard from '@/Components/catalog/ProductCard';
 
 export default function Catalog() {
   const [searchQuery, setSearchQuery] = React.useState('');

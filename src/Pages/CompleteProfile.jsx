@@ -14,11 +14,11 @@ import {
   Loader2,
   CheckCircle
 } from 'lucide-react';
-import { Button } from '../components/ui/button';
-import { Input } from '../components/ui/input';
-import { Label } from '../components/ui/label';
-import { Textarea } from '../components/ui/textarea';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../components/ui/card';
+import { Button } from '../Components/ui/button';
+import { Input } from '../Components/ui/input';
+import { Label } from '../Components/ui/label';
+import { Textarea } from '../Components/ui/textarea';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../Components/ui/card';
 
 export default function CompleteProfile() {
   const navigate = useNavigate();

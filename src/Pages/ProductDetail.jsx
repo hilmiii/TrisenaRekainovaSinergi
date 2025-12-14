@@ -15,10 +15,10 @@ import {
   Award,
   Clock
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Badge } from '@/components/ui/badge';
-import ProductCustomizer from '@/components/catalog/ProductCustomizer';
+import { Button } from '@/Components/ui/button';
+import { Skeleton } from '@/Components/ui/skeleton';
+import { Badge } from '@/Components/ui/badge';
+import ProductCustomizer from '@/Components/catalog/ProductCustomizer';
 
 export default function ProductDetail() {
   const { id } = useParams(); // Sekarang ini akan berfungsi

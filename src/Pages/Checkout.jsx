@@ -13,8 +13,8 @@ import {
   CheckCircle,
   Loader2
 } from 'lucide-react';
-import { Button } from '../components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
+import { Button } from '../Components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '../Components/ui/card';
 
 export default function Checkout() {
   const navigate = useNavigate();

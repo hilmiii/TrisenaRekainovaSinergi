@@ -15,7 +15,7 @@ import {
   Phone,
   MessageCircle
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/Components/ui/button';
 
 export default function Home() {
   const products = [
