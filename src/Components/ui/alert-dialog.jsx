@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from "react";
 import { cn } from "@/lib/utils";
-import { Button } from "./button"; // Menggunakan komponen Button yang sudah ada
+import { Button } from "@/Components/ui/button"; // Menggunakan komponen Button yang sudah ada
 
 // Context untuk AlertDialog State
 const AlertDialogContext = createContext({});

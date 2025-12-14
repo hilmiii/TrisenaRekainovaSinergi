@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { createPageUrl } from '../../utils';
+import { createPageUrl } from '@/utils';
 import { Button } from '@/components/ui/button';
 import { ShoppingCart, Menu, X, User, Beaker, LogOut } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
