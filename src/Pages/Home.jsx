@@ -83,7 +83,7 @@ export default function Home() {
                   </Button>
                 </Link>
                 <a href="https://wa.me/6281298229897" target="_blank" rel="noopener noreferrer">
-                  <Button size="lg" variant="outline" className="text-lg px-8 h-14 border-white/30 text-white hover:bg-white/10">
+                  <Button size="lg" variant="outline" className="text-lg px-8 h-14 border-white/30 text-black hover:bg-white/10">
                     <MessageCircle className="mr-2 w-5 h-5" />
                     Konsultasi Gratis
                   </Button>
@@ -304,7 +304,7 @@ export default function Home() {
                 </Button>
               </Link>
               <a href="tel:+6281298229897">
-                <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 text-lg px-8 h-14">
+                <Button size="lg" variant="outline" className="border-white text-black hover:bg-white/10 text-lg px-8 h-14">
                   <Phone className="mr-2 w-5 h-5" />
                   +62 812 9822 9897
                 </Button>

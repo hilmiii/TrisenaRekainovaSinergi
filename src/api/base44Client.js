@@ -1,4 +1,3 @@
-// src/api/base44Client.js
 import lemariAsamImg from '@/assets/img/lemariAsam.jpg';
 import laminarAirFlowImg from '@/assets/img/laminarAirFlow.jpg';
 import fumeHoodImg from '@/assets/img/fumeHood.jpg';
@@ -67,7 +66,7 @@ export const base44 = {
         id: "usr_123",
         email: "admin@trisena.id",
         full_name: "Admin Trisena",
-        role: "admin", // set 'user' untuk user biasa
+        role: "admin", 
         is_admin: true,
         phone: "08123456789",
         company: "PT. Internal",
@@ -84,25 +83,30 @@ export const base44 = {
       if (redirectUrl) window.location.href = redirectUrl;
       else window.location.reload();
     },
+    
+    // --- PERBAIKAN DI SINI ---
     redirectToLogin: (returnUrl) => {
-      // Auto login mock untuk demo purpose
+      // Kita ubah mock ini menjadi ADMIN agar bisa masuk Dashboard
       const user = {
-        id: "cust_001",
-        full_name: "Budi Santoso",
-        email: "budi@example.com",
-        role: "user",
-        is_admin: false,
-        // Uncomment baris bawah untuk tes halaman CompleteProfile
-        // phone: "", company: "", address: "" 
-        phone: "081299998888",
-        company: "Univ Indonesia",
-        position: "Lab Assistant",
-        address: "Jl. Kampus UI Depok"
+        id: "admin_001",
+        full_name: "Admin Trisena",
+        email: "admin@trisena.id",
+        role: "admin",              // Diubah jadi 'admin'
+        is_admin: true,             // Diubah jadi true
+        phone: "08123456789",
+        company: "PT. Trisena",
+        position: "Administrator",
+        address: "Jakarta"
       };
-      localStorage.setItem('base44_token', 'mock_user_token');
+      
+      localStorage.setItem('base44_token', 'mock_admin_token');
       localStorage.setItem('base44_user', JSON.stringify(user));
+      
+      // Reload halaman agar useEffect di AdminLogin mendeteksi user baru
       window.location.reload();
     },
+    // -------------------------
+
     updateMe: async (data) => {
       await delay(500);
       const currentUser = JSON.parse(localStorage.getItem('base44_user') || '{}');
