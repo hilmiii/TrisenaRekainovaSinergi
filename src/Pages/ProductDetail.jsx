@@ -1,40 +1,33 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
-import { Link, useParams } from 'react-router-dom'; // <--- Perbaikan di sini (tambahkan useParams)
-import { createPageUrl } from '@/utils';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
-  ArrowLeft, 
-  CheckCircle, 
-  Shield, 
-  Truck, 
-  Phone,
-  MessageCircle,
-  Beaker,
-  Award,
-  Clock
+  ArrowLeft, CheckCircle, Shield, Truck, Phone,
+  MessageCircle, Beaker, Award, Clock, ImageOff
 } from 'lucide-react';
+
+import { base44 } from '@/api/base44Client';
+import { createPageUrl } from '@/utils';
 import { Button } from '@/Components/ui/button';
 import { Skeleton } from '@/Components/ui/skeleton';
 import { Badge } from '@/Components/ui/badge';
 import ProductCustomizer from '@/Components/catalog/ProductCustomizer';
 
 export default function ProductDetail() {
-  const { id } = useParams(); // Sekarang ini akan berfungsi
-
-  // Fallback jika ID tidak ada (misal diakses via query string lama)
-  const queryParams = new URLSearchParams(window.location.search);
-  const productId = id || queryParams.get('id');
+  const { id } = useParams();
+  const [searchParams] = useSearchParams();
+  
+  const productId = id || searchParams.get('id');
 
   const { data: product, isLoading } = useQuery({
     queryKey: ['product', productId],
     queryFn: async () => {
-      // Pastikan filter menggunakan ID yang benar
-      const products = await base44.entities.Product.filter({ id: productId });
-      return products[0];
+      const response = await base44.get(`/products/${productId}`);
+      return response.data;
     },
-    enabled: !!productId
+    enabled: !!productId,
+    retry: false 
   });
 
   const handleAddToCart = (cartItem) => {
@@ -43,15 +36,15 @@ export default function ProductDetail() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 py-12">
+      <div className="min-h-screen bg-gray-50 py-12 pt-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12">
-            <Skeleton className="aspect-square rounded-2xl" />
+            <Skeleton className="aspect-square rounded-3xl" />
             <div className="space-y-6">
-              <Skeleton className="h-8 w-3/4" />
-              <Skeleton className="h-6 w-1/2" />
-              <Skeleton className="h-32 w-full" />
-              <Skeleton className="h-12 w-full" />
+              <Skeleton className="h-8 w-3/4 rounded-md" />
+              <Skeleton className="h-6 w-1/2 rounded-md" />
+              <Skeleton className="h-32 w-full rounded-md" />
+              <Skeleton className="h-12 w-full rounded-md" />
             </div>
           </div>
         </div>
@@ -61,109 +54,127 @@ export default function ProductDetail() {
 
   if (!product) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Produk tidak ditemukan</h1>
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center pt-20">
+        <div className="text-center bg-white p-12 rounded-3xl border border-gray-200 shadow-sm max-w-md mx-auto">
+          <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <Beaker className="w-10 h-10 text-gray-400" />
+          </div>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">Produk Tidak Ditemukan</h1>
+          <p className="text-gray-500 mb-8">Produk yang Anda cari mungkin telah dihapus atau URL tidak valid.</p>
           <Link to={createPageUrl('Catalog')}>
-            <Button>Kembali ke Katalog</Button>
+            <Button className="w-full h-12 text-lg bg-teal-600 hover:bg-teal-700 rounded-xl">
+              <ArrowLeft className="w-5 h-5 mr-2" />
+              Kembali ke Katalog
+            </Button>
           </Link>
         </div>
       </div>
     );
   }
 
+  const formattedImageUrl = product.image_url?.replace('/src/assets', '') || '';
+  
+  // Deteksi kategori jasa
+  const isService = product.category === 'jasa';
+
   return (
     <div className="min-h-screen bg-gray-50 pt-20" itemScope itemType="https://schema.org/Product">
+      
       {/* Breadcrumb */}
-      <div className="bg-white border-b">
+      <div className="bg-white border-b shadow-sm sticky top-[64px] z-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center gap-2 text-sm">
-            <Link to={createPageUrl('Home')} className="text-gray-500 hover:text-teal-600">
-              Beranda
-            </Link>
+            <Link to={createPageUrl('Home')} className="text-gray-500 hover:text-teal-600 font-medium transition-colors">Beranda</Link>
             <span className="text-gray-300">/</span>
-            <Link to={createPageUrl('Catalog')} className="text-gray-500 hover:text-teal-600">
-              Katalog
-            </Link>
+            <Link to={createPageUrl('Catalog')} className="text-gray-500 hover:text-teal-600 font-medium transition-colors">Katalog</Link>
             <span className="text-gray-300">/</span>
-            <span className="text-gray-900 font-medium">{product.name}</span>
+            <span className="text-teal-700 font-semibold truncate">{product.name}</span>
           </div>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid lg:grid-cols-2 gap-12">
-          {/* Product Image */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="space-y-4"
-          >
-            <div className="relative aspect-square rounded-2xl overflow-hidden bg-white shadow-lg">
-              <img
-                src={product.image_url}
-                alt={`${product.name} - Furniture Laboratorium Prosafeaire`}
-                className="w-full h-full object-cover"
-                itemProp="image"
-              />
-              <Badge className="absolute top-4 left-4 bg-teal-600">
-                Prosafeaire
-              </Badge>
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
+          
+          {/* Product Image Section */}
+          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
+            <div className="relative aspect-square rounded-3xl overflow-hidden bg-white shadow-xl border border-gray-100 group">
+              {formattedImageUrl ? (
+                <img
+                  src={formattedImageUrl}
+                  alt={`${product.name} - PT Trisena Rekainova`}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  itemProp="image"
+                />
+              ) : (
+                <div className="w-full h-full flex flex-col items-center justify-center text-gray-400 bg-gray-100">
+                  <ImageOff className="w-16 h-16 mb-2" />
+                  <span className="font-medium">Gambar Tidak Tersedia</span>
+                </div>
+              )}
+              <Badge className="absolute top-6 left-6 bg-teal-600 px-3 py-1 text-sm shadow-md">Prosafeaire</Badge>
             </div>
 
             {/* Trust Badges */}
             <div className="grid grid-cols-3 gap-4">
               {[
-                { icon: Shield, label: "Garansi 5 Tahun" },
-                { icon: Truck, label: "Pengiriman Aman" },
-                { icon: Award, label: "Lab Grade Quality" }
+                { icon: Shield, label: isService ? "Profesional" : "Bergaransi" },
+                { icon: Truck, label: isService ? "Tepat Waktu" : "Pengiriman Aman" },
+                { icon: Award, label: isService ? "Terstandarisasi" : "Lab Grade Quality" }
               ].map((item) => (
-                <div key={item.label} className="bg-white rounded-xl p-4 text-center shadow-sm">
-                  <item.icon className="w-8 h-8 text-teal-600 mx-auto mb-2" />
-                  <span className="text-xs text-gray-600">{item.label}</span>
+                <div key={item.label} className="bg-white rounded-2xl p-4 text-center shadow-sm border border-gray-100 hover:border-teal-200 transition-colors group">
+                  <div className="w-12 h-12 bg-teal-50 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:bg-teal-100 transition-colors">
+                    <item.icon className="w-6 h-6 text-teal-600" />
+                  </div>
+                  <span className="text-xs font-semibold text-gray-600">{item.label}</span>
                 </div>
               ))}
             </div>
           </motion.div>
 
-          {/* Product Info & Customizer */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="space-y-6"
-          >
+          {/* Product Info Section */}
+          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-8">
             <div>
-              <span className="text-teal-600 font-semibold text-sm uppercase tracking-wider">
+              <span className="inline-block bg-teal-50 text-teal-700 font-bold text-xs uppercase tracking-wider px-3 py-1 rounded-full mb-4">
                 {product.category?.replace(/_/g, ' ')}
               </span>
-              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mt-2" itemProp="name">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 leading-tight" itemProp="name">
                 {product.name}
               </h1>
             </div>
 
-            <div itemProp="offers" itemScope itemType="https://schema.org/Offer">
-              <span className="text-sm text-gray-500">Harga mulai dari</span>
-              <p className="text-3xl font-bold text-teal-600" itemProp="price">
-                Rp {product.base_price?.toLocaleString('id-ID')}
-              </p>
-              <meta itemProp="priceCurrency" content="IDR" />
-              <span className="text-sm text-gray-500">* Harga dapat bervariasi sesuai spesifikasi</span>
-            </div>
+            {/* Sembunyikan harga jika ini adalah layanan jasa */}
+            {!isService && (
+              <div itemProp="offers" itemScope itemType="https://schema.org/Offer" className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
+                <span className="block text-sm font-medium text-gray-500 mb-1">Estimasi Harga Mulai Dari</span>
+                <p className="text-4xl font-extrabold text-teal-600 tracking-tight" itemProp="price">
+                  {product.base_price 
+                    ? new Intl.NumberFormat('id-ID', { 
+                        style: 'currency', 
+                        currency: 'IDR',
+                        maximumFractionDigits: 0
+                      }).format(product.base_price)
+                    : 'Rp 0'}
+                </p>
+                <meta itemProp="priceCurrency" content="IDR" />
+                <p className="text-sm text-gray-400 mt-2">* Harga final menyesuaikan dengan opsi material & dimensi yang dipilih</p>
+              </div>
+            )}
 
-            <div className="prose prose-sm max-w-none" itemProp="description">
-              <p className="text-gray-600 leading-relaxed">
-                {product.description}
-              </p>
+            <div className="prose prose-base text-gray-600 leading-relaxed" itemProp="description">
+              <p>{product.description}</p>
             </div>
 
             {/* Features */}
-            {product.features && product.features.length > 0 && (
-              <div>
-                <h3 className="font-semibold text-gray-900 mb-3">Fitur Utama:</h3>
-                <ul className="grid grid-cols-2 gap-2">
+            {product.features?.length > 0 && (
+              <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
+                <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
+                  <Award className="w-5 h-5 text-teal-600" /> Keunggulan Fitur
+                </h3>
+                <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {product.features.map((feature, index) => (
-                    <li key={index} className="flex items-center gap-2 text-sm text-gray-600">
-                      <CheckCircle className="w-4 h-4 text-teal-500 flex-shrink-0" />
+                    <li key={index} className="flex items-start gap-3 text-sm text-gray-600 font-medium">
+                      <CheckCircle className="w-5 h-5 text-teal-500 flex-shrink-0 mt-0.5" />
                       {feature}
                     </li>
                   ))}
@@ -171,56 +182,76 @@ export default function ProductDetail() {
               </div>
             )}
 
-            {/* Customizer */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
-              <h3 className="font-bold text-gray-900 mb-6 flex items-center gap-2">
-                <Beaker className="w-5 h-5 text-teal-600" />
-                Konfigurasi Produk
-              </h3>
-              <ProductCustomizer product={product} onAddToCart={handleAddToCart} />
-            </div>
-
-            {/* WhatsApp Contact */}
-            <div className="bg-gradient-to-br from-green-50 to-teal-50 rounded-2xl p-6 border border-green-100">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
-                  <MessageCircle className="w-6 h-6 text-white" />
+            {/* Customizer untuk Produk Fisik ATAU Tombol WhatsApp untuk Jasa */}
+            {!isService ? (
+              <div className="bg-white rounded-3xl p-6 shadow-lg shadow-gray-200/50 border border-gray-200">
+                <h3 className="font-bold text-gray-900 mb-6 flex items-center gap-2 text-lg">
+                  <Beaker className="w-6 h-6 text-teal-600" />
+                  Konfigurasi Pesanan Anda
+                </h3>
+                <ProductCustomizer product={product} onAddToCart={handleAddToCart} />
+              </div>
+            ) : (
+              <div className="bg-teal-50 rounded-3xl p-8 border border-teal-100 shadow-sm text-center">
+                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
+                  <Phone className="w-8 h-8 text-teal-600" />
                 </div>
-                <div className="flex-1">
-                  <h4 className="font-semibold text-gray-900 mb-1">
-                    Butuh Konsultasi?
-                  </h4>
-                  <p className="text-sm text-gray-600 mb-3">
-                    Hubungi tim kami untuk konsultasi gratis tentang spesifikasi {product.name} 
-                    yang sesuai dengan kebutuhan laboratorium Anda.
-                  </p>
-                  <a
-                    href={`https://wa.me/6281298229897?text=Halo,%20saya%20tertarik%20dengan%20${encodeURIComponent(product.name)}.%20Bisa%20dibantu%20untuk%20konsultasi?`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-5 py-2.5 rounded-lg font-medium transition-colors"
-                  >
-                    <Phone className="w-4 h-4" />
-                    +62 812 9822 9897
-                  </a>
+                <h3 className="font-bold text-teal-900 mb-3 text-2xl">Konsultasikan Kebutuhan Anda</h3>
+                <p className="text-teal-700 mb-8 leading-relaxed">
+                  Layanan <b>{product.name}</b> memerlukan analisis mendalam dan pendekatan khusus. Silakan hubungi tim ahli kami untuk mendapatkan survei, konsultasi gratis, dan penawaran yang tepat sasaran.
+                </p>
+                <a
+                  href={`https://wa.me/6281298229897?text=Halo,%20saya%20tertarik%20dengan%20layanan%20${encodeURIComponent(product.name)}.%20Bisa%20dibantu%20untuk%20informasi%20lebih%20lanjut?`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-3 w-full bg-teal-600 text-white hover:bg-teal-700 px-8 py-4 rounded-xl font-bold text-lg transition-all shadow-lg hover:shadow-xl hover:-translate-y-1"
+                >
+                  <Phone className="w-6 h-6" /> Hubungi Kami: 0812-9822-9897
+                </a>
+              </div>
+            )}
+
+            {/* Tampilkan WhatsApp Banner biasa untuk produk fisik */}
+            {!isService && (
+              <div className="bg-gradient-to-br from-teal-600 to-teal-800 rounded-3xl p-8 text-white shadow-xl shadow-teal-900/20">
+                <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 text-center sm:text-left">
+                  <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center flex-shrink-0">
+                    <MessageCircle className="w-8 h-8 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="text-xl font-bold mb-2">Butuh Konsultasi Lab?</h4>
+                    <p className="text-teal-100 mb-6 leading-relaxed">
+                      Tim engineer kami siap membantu Anda menyesuaikan spesifikasi {product.name} agar tepat sasaran dengan standar lab Anda.
+                    </p>
+                    <a
+                      href={`https://wa.me/6281298229897?text=Halo,%20saya%20tertarik%20dengan%20${encodeURIComponent(product.name)}.%20Bisa%20dibantu%20untuk%20konsultasi?`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 bg-white text-teal-700 hover:bg-gray-50 px-6 py-3 rounded-xl font-bold transition-all shadow-md hover:shadow-lg"
+                    >
+                      <Phone className="w-5 h-5" /> Hubungi via WhatsApp
+                    </a>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
 
-            {/* Delivery Info */}
-            <div className="flex items-center gap-3 text-sm text-gray-600">
-              <Clock className="w-5 h-5 text-teal-500" />
-              <span>Estimasi pengerjaan 2-4 minggu (tergantung spesifikasi)</span>
-            </div>
+            {/* Delivery Info: Sembunyikan untuk Jasa karena mereka tidak dikirim via paket */}
+            {!isService && (
+              <div className="flex items-center gap-3 text-sm font-medium text-gray-500 bg-gray-100 px-5 py-3 rounded-xl">
+                <Clock className="w-5 h-5 text-gray-400" />
+                <span>Estimasi perakitan dan pengiriman: 2-4 minggu</span>
+              </div>
+            )}
           </motion.div>
         </div>
 
         {/* Back Button */}
-        <div className="mt-12">
+        <div className="mt-16 border-t border-gray-200 pt-8">
           <Link to={createPageUrl('Catalog')}>
-            <Button variant="outline" className="gap-2">
-              <ArrowLeft className="w-4 h-4" />
-              Kembali ke Katalog
+            <Button variant="outline" className="gap-2 h-12 px-6 rounded-xl hover:bg-gray-100 border-gray-300">
+              <ArrowLeft className="w-5 h-5" />
+              Kembali Lihat Katalog
             </Button>
           </Link>
         </div>

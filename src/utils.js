@@ -8,8 +8,10 @@ export const createPageUrl = (pageName) => {
     'About': '/about',
     'Contact': '/contact',
     'Checkout': '/checkout',
-    'Cart': '/cart', // Jika nanti ada halaman cart terpisah
-    'Login': '/admin/login', // Mengarah ke admin login untuk saat ini
+    'Cart': '/cart', 
+    'Login': '/login',           // PERBAIKAN: Sekarang mengarah ke /login (User)
+    'Register': '/register', 
+    'Profile': '/profile',    // TAMBAHAN: Rute untuk halaman pendaftaran
     'AdminLogin': '/admin/login',
     'AdminDashboard': '/admin/dashboard',
     'CompleteProfile': '/complete-profile'

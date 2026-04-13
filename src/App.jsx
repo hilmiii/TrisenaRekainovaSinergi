@@ -18,6 +18,12 @@ import Checkout from '@/Pages/Checkout';
 import CompleteProfile from '@/Pages/CompleteProfile';
 import AdminLogin from '@/Pages/AdminLogin';
 import AdminDashboard from '@/Pages/AdminDashboard';
+import Login from './Pages/Login';
+import Register from './Pages/Register';
+import Profile from './Pages/Profile';
+import MyOrders from '@/Pages/MyOrders'; // Tambahkan baris ini di kumpulan import Pages
+import ForgotPassword from '@/Pages/ForgotPassword';
+import ResetPassword from '@/Pages/ResetPassword';
 
 // Styles
 import '@/index.css';
@@ -66,9 +72,20 @@ function App() {
             <Route path="/complete-profile" element={<Layout currentPageName="CompleteProfile"><CompleteProfile /></Layout>} />
 
             {/* Admin Routes */}
-            <Route path="/admin/login" element={<AdminLogin />} />
-            <Route path="/login" element={<Navigate to="/admin/login" replace />} />
+            {/* Admin Routes */}
+            {/* INI ADALAH URL RAHASIANYA. Jangan pakai /admin/login agar tidak mudah ditebak */}
+            <Route path="/portal-trisena-rahasia" element={<AdminLogin />} /> 
+            
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            <Route path="/login" element={<Login />} />
+
+            {/* User Routes */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/register" element={<Register />} /> 
+            <Route path="/profile" element={<Layout currentPageName="Profile"><Profile /></Layout>} /> {/* TAMBAHKAN BARIS INI */}
+            <Route path="/my-orders" element={<Layout currentPageName="MyOrders"><MyOrders /></Layout>} />
 
             {/* 404 Fallback */}
             <Route path="*" element={

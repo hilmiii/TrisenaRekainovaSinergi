@@ -13,7 +13,10 @@ export default function Catalog() {
 
   const { data: products = [], isLoading } = useQuery({
     queryKey: ['products'],
-    queryFn: () => base44.entities.Product.list(),
+    queryFn: async () => {
+      const response = await base44.get('/products');
+      return response.data;
+    },
   });
 
   const categories = [
@@ -21,7 +24,7 @@ export default function Catalog() {
     { value: 'fume_hood', label: 'Lemari Asam' },
     { value: 'laminar_flow', label: 'Laminar Air Flow' },
     { value: 'scrubber', label: 'Fume Hood Scrubber' },
-    { value: 'furniture', label: 'Furnitur Lab' },
+    { value: 'jasa', label: 'Jasa & Layanan' }, 
   ];
 
   const filteredProducts = products.filter(product => {
@@ -34,21 +37,19 @@ export default function Catalog() {
   return (
     <div className="min-h-screen bg-gray-50 pt-20">
       {/* Hero Banner */}
-      <section className="bg-gradient-to-br from-gray-900 via-gray-800 to-teal-900 py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center"
-          >
-            <div className="inline-flex items-center gap-2 bg-teal-500/20 text-teal-400 px-4 py-2 rounded-full text-sm font-medium mb-6">
+      {/* Hero Banner */}
+      <section className="bg-slate-900 py-20 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(20,184,166,0.15),transparent_50%)]" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center max-w-3xl mx-auto">
+            <div className="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/20 text-teal-400 px-4 py-1.5 rounded-full text-sm font-medium mb-6">
               <Beaker className="w-4 h-4" />
               Katalog Produk Prosafeaire
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
               Furniture Laboratorium <span className="text-teal-400">Berkualitas</span>
             </h1>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
+            <p className="text-lg text-slate-300 mb-8 leading-relaxed">
               Temukan koleksi lengkap Lemari Asam, Laminar Air Flow, Fume Hood Scrubber, 
               dan berbagai furniture laboratorium lainnya dengan standar internasional.
             </p>
@@ -56,30 +57,32 @@ export default function Catalog() {
         </div>
       </section>
 
-      {/* Search & Filter */}
-      <section className="py-8 bg-white border-b sticky top-20 z-30">
+      {/* Modern Search & Filter */}
+      <section className="py-6 bg-white border-b sticky top-[64px] z-30 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-            <div className="relative w-full md:w-96">
+          <div className="flex flex-col gap-5">
+            {/* Search Bar */}
+            <div className="relative w-full max-w-2xl mx-auto">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
               <Input
                 type="text"
-                placeholder="Cari lemari asam, laminar air flow..."
+                placeholder="Cari alat laboratorium (misal: Lemari Asam)..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-12 h-12 border-gray-200"
+                className="pl-12 h-14 text-base bg-slate-50 border-transparent focus:bg-white focus:border-teal-500 focus:ring-2 focus:ring-teal-200 rounded-2xl transition-all shadow-sm w-full"
               />
             </div>
             
-            <div className="flex flex-wrap gap-2">
+            {/* Category Pills */}
+            <div className="flex flex-wrap items-center justify-center gap-2 lg:gap-3">
               {categories.map((cat) => (
                 <button
                   key={cat.value}
                   onClick={() => setSelectedCategory(cat.value)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                  className={`px-5 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 ${
                     selectedCategory === cat.value
-                      ? 'bg-teal-600 text-white'
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                      ? 'bg-teal-600 text-white shadow-md shadow-teal-500/30 -translate-y-0.5'
+                      : 'bg-white text-slate-600 border border-slate-200 hover:border-teal-300 hover:bg-teal-50 hover:text-teal-700'
                   }`}
                 >
                   {cat.label}
@@ -91,33 +94,29 @@ export default function Catalog() {
       </section>
 
       {/* Products Grid */}
-      <section className="py-12">
+      <section className="py-12 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {isLoading ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[1, 2, 3, 4, 5, 6].map((i) => (
-                <div key={i} className="bg-white rounded-2xl overflow-hidden">
-                  <Skeleton className="aspect-[4/3]" />
-                  <div className="p-6 space-y-3">
-                    <Skeleton className="h-6 w-3/4" />
-                    <Skeleton className="h-4 w-full" />
-                    <Skeleton className="h-4 w-2/3" />
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-100">
+                  <Skeleton className="aspect-[4/3] w-full" />
+                  <div className="p-6 space-y-4">
+                    <Skeleton className="h-6 w-3/4 rounded-md" />
+                    <Skeleton className="h-4 w-full rounded-md" />
+                    <Skeleton className="h-4 w-2/3 rounded-md" />
                   </div>
                 </div>
               ))}
             </div>
           ) : filteredProducts.length === 0 ? (
-            <div className="text-center py-20">
-              <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Filter className="w-10 h-10 text-gray-400" />
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-20 bg-white rounded-3xl border border-dashed border-slate-300 max-w-2xl mx-auto">
+              <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Filter className="w-8 h-8 text-slate-400" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                Tidak ada produk ditemukan
-              </h3>
-              <p className="text-gray-500">
-                Coba ubah kata kunci pencarian atau filter kategori
-              </p>
-            </div>
+              <h3 className="text-xl font-bold text-slate-800 mb-2">Tidak ada produk ditemukan</h3>
+              <p className="text-slate-500">Coba ubah kata kunci pencarian atau pilih kategori lain.</p>
+            </motion.div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredProducts.map((product, index) => (
@@ -125,40 +124,6 @@ export default function Catalog() {
               ))}
             </div>
           )}
-        </div>
-      </section>
-
-      {/* SEO Content */}
-      <section className="py-16 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <article className="prose prose-lg max-w-none">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">
-              Furniture Laboratorium Prosafeaire - Solusi Lengkap untuk Lab Modern
-            </h2>
-            <p className="text-gray-600 mb-4">
-              PT. Trisena Rekainova Sinergi menyediakan berbagai jenis furniture laboratorium 
-              berkualitas tinggi dengan merek Prosafeaire. Produk kami meliputi:
-            </p>
-            <ul className="text-gray-600 space-y-2 mb-4">
-              <li>
-                <strong>Lemari Asam Prosafeaire (Fume Hood)</strong> - Lemari asam multipurpose 
-                dengan sistem ventilasi canggih untuk menjaga keamanan operator laboratorium
-              </li>
-              <li>
-                <strong>Laminar Air Flow Prosafeaire</strong> - Meja kerja steril dengan 
-                aliran udara laminar dan filter HEPA untuk kemurnian sampel maksimal
-              </li>
-              <li>
-                <strong>Fume Hood Scrubber Prosafeaire</strong> - Sistem penyaring udara 
-                buangan lemari asam untuk menjaga kualitas udara lingkungan
-              </li>
-            </ul>
-            <p className="text-gray-600">
-              Semua produk furniture laboratorium kami dirancang untuk memenuhi standar 
-              Good Laboratory Practice (GLP) dan dilengkapi dengan garansi serta layanan 
-              purna jual terbaik.
-            </p>
-          </article>
         </div>
       </section>
     </div>

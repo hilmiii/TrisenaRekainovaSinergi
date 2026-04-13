@@ -1,172 +1,226 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { ShoppingCart, Plus, Minus, Info } from 'lucide-react';
 import { Button } from '@/Components/ui/button';
 import { Label } from '@/Components/ui/label';
-import { Textarea } from '@/Components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/Components/ui/select';
-import { Input } from '@/Components/ui/input';
-import { ShoppingCart, Check, Package, Ruler, Palette, Layers } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+
+// ==========================================
+// 1. KAMUS HARGA (Sesuai Price List PDF)
+// ==========================================
+const PRICING_DATA = {
+  "Fume Hood": {
+    "Standard (HPL)": {
+      "4ft (FHP120C-HPL)": 47000000,
+      "5ft (FHP150C-HPL)": 58000000,
+      "6ft (FHP180C-HPL)": 84000000,
+      "8ft (FHP240C-HPL)": 92000000,
+    },
+    "Medium (SCR)": {
+      "4ft (FHP120C-SCR)": 50000000,
+      "5ft (FHP150C-SCR)": 62000000,
+      "6ft (FHP180C-SCR)": 89000000,
+      "8ft (FHP240C-SCR)": 98000000,
+    },
+    "Premium (PRH)": {
+      "4ft (FHP120C-PRH)": 59000000,
+      "5ft (FHP150C-PRH)": 70000000,
+      "6ft (FHP180C-PRH)": 106000000,
+      "8ft (FHP240C-PRH)": 114000000,
+    }
+  },
+  "Laminar Air Flow": {
+    "Standard": {
+      "LVP120H": 47000000,
+    }
+  },
+  "Wet Scrubber": {
+    "Without Blower": {
+      "600 x 600 x 1500 mm (FHS601)": 24000000,
+      // PERBAIKAN: Ukuran diubah menjadi 850 x 850 sesuai gambar terbaru
+      "850 x 850 x 1500 mm (FHS601)": 26000000, 
+    }
+  }
+};
 
 export default function ProductCustomizer({ product, onAddToCart }) {
+  const [productType, setProductType] = useState(null);
+  const [availableMaterials, setAvailableMaterials] = useState([]);
   const [selectedMaterial, setSelectedMaterial] = useState('');
+  
+  const [availableSizes, setAvailableSizes] = useState([]);
   const [selectedSize, setSelectedSize] = useState('');
-  const [selectedColor, setSelectedColor] = useState('');
+  
   const [quantity, setQuantity] = useState(1);
-  const [notes, setNotes] = useState('');
-  const [added, setAdded] = useState(false);
+  const [unitPrice, setUnitPrice] = useState(product.base_price || 0);
 
-  const handleAddToCart = () => {
-    if (!selectedMaterial || !selectedSize || !selectedColor) {
-      return;
+// 2. DETEKSI JENIS PRODUK & SET PILIHAN
+  useEffect(() => {
+    if (!product || !product.name) return;
+
+    const nameLower = product.name.toLowerCase();
+    let type = null;
+
+    // PERBAIKAN: Cek 'scrubber' DULU sebelum 'fume hood'
+    // Karena Scrubber juga memiliki kata "Fume Hood" di namanya
+    if (nameLower.includes('scrubber')) {
+      type = "Wet Scrubber";
+    } else if (nameLower.includes('fume hood') || nameLower.includes('lemari asam')) {
+      type = "Fume Hood";
+    } else if (nameLower.includes('laminar')) {
+      type = "Laminar Air Flow";
     }
-    
-    const cartItem = {
-      product,
-      material: selectedMaterial,
-      size: selectedSize,
-      color: selectedColor,
-      quantity,
-      notes,
-      addedAt: new Date().toISOString()
-    };
-    
-    onAddToCart(cartItem);
-    setAdded(true);
-    setTimeout(() => setAdded(false), 2000);
-  };
 
-  const isValid = selectedMaterial && selectedSize && selectedColor;
+    if (type && PRICING_DATA[type]) {
+      setProductType(type);
+      const materials = Object.keys(PRICING_DATA[type]);
+      setAvailableMaterials(materials);
+      
+      const initialMaterial = materials[0];
+      setSelectedMaterial(initialMaterial);
+      
+      const sizes = Object.keys(PRICING_DATA[type][initialMaterial]);
+      setAvailableSizes(sizes);
+      setSelectedSize(sizes[0]);
+    } else {
+      setProductType('Other'); // Jika produk lain di luar price list
+      setUnitPrice(product.base_price || 0);
+    }
+  }, [product]);
+
+  // 3. UPDATE UKURAN & HARGA SAAT MATERIAL BERUBAH
+  useEffect(() => {
+    if (productType !== 'Other' && productType && selectedMaterial) {
+      const sizes = Object.keys(PRICING_DATA[productType][selectedMaterial] || {});
+      setAvailableSizes(sizes);
+      if (!sizes.includes(selectedSize)) {
+        setSelectedSize(sizes[0]);
+      }
+    }
+  }, [selectedMaterial, productType]);
+
+  // 4. KALKULASI HARGA REAL-TIME
+  useEffect(() => {
+    if (productType !== 'Other' && productType && selectedMaterial && selectedSize) {
+      const exactPrice = PRICING_DATA[productType][selectedMaterial][selectedSize];
+      setUnitPrice(exactPrice || product.base_price || 0);
+    }
+  }, [selectedMaterial, selectedSize, productType]);
+
+  const handleSubmit = () => {
+    const cartItem = {
+      product: product,
+      material: productType !== 'Other' ? selectedMaterial : '-',
+      size: productType !== 'Other' ? selectedSize : '-',
+      color: 'Standard', // Default
+      quantity: quantity,
+      unit_price: unitPrice,
+      total_price: unitPrice * quantity,
+      notes: ''
+    };
+    onAddToCart(cartItem);
+    
+    // Tampilkan feedback visual
+    alert(`Berhasil menambahkan ${quantity} unit ${product.name} ke keranjang!`);
+  };
 
   return (
     <div className="space-y-6">
-      {/* Material Selection */}
-      <div className="space-y-2">
-        <Label className="flex items-center gap-2 text-gray-700 font-medium">
-          <Layers className="w-4 h-4 text-teal-500" />
-          Material Konstruksi
-        </Label>
-        <Select value={selectedMaterial} onValueChange={setSelectedMaterial}>
-          <SelectTrigger className="w-full h-12 border-gray-200 focus:ring-teal-500">
-            <SelectValue placeholder="Pilih material..." />
-          </SelectTrigger>
-          <SelectContent>
-            {product.materials?.map((material) => (
-              <SelectItem key={material} value={material}>
-                {material}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
+      
+      {/* Jika produk dikenali di Price List */}
+      {productType !== 'Other' && (
+        <div className="space-y-5">
+          {/* Pemilihan Spesifikasi / Material */}
+          <div>
+            <Label className="text-gray-600 mb-2 block">Tipe / Material Spesifikasi</Label>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {availableMaterials.map((mat) => (
+                <button
+                  key={mat}
+                  onClick={() => setSelectedMaterial(mat)}
+                  className={`py-3 px-4 border rounded-xl text-sm font-semibold transition-all ${
+                    selectedMaterial === mat
+                      ? 'border-teal-600 bg-teal-50 text-teal-800 shadow-sm ring-1 ring-teal-600'
+                      : 'border-gray-200 text-gray-600 hover:border-teal-300 hover:bg-gray-50'
+                  }`}
+                >
+                  {mat}
+                </button>
+              ))}
+            </div>
+          </div>
 
-      {/* Size Selection */}
-      <div className="space-y-2">
-        <Label className="flex items-center gap-2 text-gray-700 font-medium">
-          <Ruler className="w-4 h-4 text-teal-500" />
-          Ukuran (P x L x T)
-        </Label>
-        <Select value={selectedSize} onValueChange={setSelectedSize}>
-          <SelectTrigger className="w-full h-12 border-gray-200 focus:ring-teal-500">
-            <SelectValue placeholder="Pilih ukuran..." />
-          </SelectTrigger>
-          <SelectContent>
-            {product.sizes?.map((size) => (
-              <SelectItem key={size} value={size}>
-                {size}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      {/* Color Selection */}
-      <div className="space-y-2">
-        <Label className="flex items-center gap-2 text-gray-700 font-medium">
-          <Palette className="w-4 h-4 text-teal-500" />
-          Warna Finishing
-        </Label>
-        <Select value={selectedColor} onValueChange={setSelectedColor}>
-          <SelectTrigger className="w-full h-12 border-gray-200 focus:ring-teal-500">
-            <SelectValue placeholder="Pilih warna..." />
-          </SelectTrigger>
-          <SelectContent>
-            {product.colors?.map((color) => (
-              <SelectItem key={color} value={color}>
-                {color}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      {/* Quantity */}
-      <div className="space-y-2">
-        <Label className="flex items-center gap-2 text-gray-700 font-medium">
-          <Package className="w-4 h-4 text-teal-500" />
-          Jumlah Unit
-        </Label>
-        <Input
-          type="number"
-          min="1"
-          value={quantity}
-          onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
-          className="h-12 border-gray-200 focus:ring-teal-500"
-        />
-      </div>
-
-      {/* Additional Notes */}
-      <div className="space-y-2">
-        <Label className="text-gray-700 font-medium">
-          Spesifikasi & Catatan Tambahan
-        </Label>
-        <Textarea
-          value={notes}
-          onChange={(e) => setNotes(e.target.value)}
-          placeholder="Tuliskan spesifikasi khusus atau permintaan tambahan untuk produk laboratorium Anda..."
-          className="min-h-[120px] border-gray-200 focus:ring-teal-500 resize-none"
-        />
-        <p className="text-xs text-gray-500">
-          Contoh: kebutuhan voltase listrik khusus, aksesoris tambahan, modifikasi desain, dll.
-        </p>
-      </div>
-
-      {/* Add to Cart Button */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={added ? 'added' : 'default'}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-        >
-          <Button
-            onClick={handleAddToCart}
-            disabled={!isValid}
-            className={`w-full h-14 text-lg font-semibold transition-all duration-300 ${
-              added 
-                ? 'bg-green-500 hover:bg-green-600' 
-                : 'bg-teal-600 hover:bg-teal-700'
-            } disabled:bg-gray-300 disabled:cursor-not-allowed`}
-          >
-            {added ? (
-              <>
-                <Check className="w-5 h-5 mr-2" />
-                Ditambahkan ke Keranjang!
-              </>
-            ) : (
-              <>
-                <ShoppingCart className="w-5 h-5 mr-2" />
-                Masukkan ke Keranjang
-              </>
-            )}
-          </Button>
-        </motion.div>
-      </AnimatePresence>
-
-      {!isValid && (
-        <p className="text-sm text-amber-600 text-center">
-          * Pilih material, ukuran, dan warna terlebih dahulu
-        </p>
+          {/* Pemilihan Ukuran */}
+          <div>
+            <Label className="text-gray-600 mb-2 block">Ukuran / Dimensi</Label>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {availableSizes.map((sz) => (
+                <button
+                  key={sz}
+                  onClick={() => setSelectedSize(sz)}
+                  className={`py-3 px-4 border rounded-xl text-sm font-semibold transition-all ${
+                    selectedSize === sz
+                      ? 'border-teal-600 bg-teal-50 text-teal-800 shadow-sm ring-1 ring-teal-600'
+                      : 'border-gray-200 text-gray-600 hover:border-teal-300 hover:bg-gray-50'
+                  }`}
+                >
+                  {sz}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
       )}
+
+      {/* Pengatur Jumlah (Quantity) */}
+      <div className="pt-2 border-t border-gray-100">
+        <Label className="text-gray-600 mb-2 block">Jumlah Pesanan</Label>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center border border-gray-300 rounded-xl overflow-hidden bg-white shadow-sm">
+            <button
+              onClick={() => setQuantity(Math.max(1, quantity - 1))}
+              className="p-3 hover:bg-gray-100 text-gray-600 transition-colors"
+            >
+              <Minus className="w-5 h-5" />
+            </button>
+            <div className="w-14 text-center font-bold text-gray-900 text-lg">
+              {quantity}
+            </div>
+            <button
+              onClick={() => setQuantity(quantity + 1)}
+              className="p-3 hover:bg-gray-100 text-gray-600 transition-colors"
+            >
+              <Plus className="w-5 h-5" />
+            </button>
+          </div>
+          <span className="text-sm text-gray-500 font-medium">Unit</span>
+        </div>
+      </div>
+
+      {/* Rangkuman Harga Real-Time */}
+      <div className="bg-gray-50 p-5 rounded-2xl border border-gray-200 mt-6">
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-gray-600 font-medium text-sm">Harga Satuan</span>
+          <span className="font-semibold text-gray-900">Rp {unitPrice.toLocaleString('id-ID')}</span>
+        </div>
+        <div className="flex items-center justify-between border-t border-gray-200 pt-3">
+          <span className="text-gray-800 font-bold">Total Harga</span>
+          <span className="text-2xl font-extrabold text-teal-700">
+            Rp {(unitPrice * quantity).toLocaleString('id-ID')}
+          </span>
+        </div>
+        <div className="mt-3 text-xs text-gray-500 flex gap-2">
+          <Info className="w-4 h-4 flex-shrink-0 text-blue-500" />
+          <p>Harga Franco Jakarta. Belum termasuk biaya instalasi pipa ducting (jika &gt; 6m) dan akomodasi luar kota.</p>
+        </div>
+      </div>
+
+      {/* Tombol Add to Cart */}
+      <Button
+        onClick={handleSubmit}
+        className="w-full h-14 text-lg bg-teal-600 hover:bg-teal-700 text-white rounded-xl shadow-lg shadow-teal-600/30 transition-all font-bold"
+      >
+        <ShoppingCart className="w-6 h-6 mr-2" />
+        Masukkan ke Keranjang
+      </Button>
     </div>
   );
 }
