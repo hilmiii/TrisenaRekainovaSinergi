@@ -13,6 +13,7 @@ import { Button } from '@/Components/ui/button';
 import { Skeleton } from '@/Components/ui/skeleton';
 import { Badge } from '@/Components/ui/badge';
 import ProductCustomizer from '@/Components/catalog/ProductCustomizer';
+import { Helmet } from 'react-helmet-async';
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -36,8 +37,14 @@ export default function ProductDetail() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 py-12 pt-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-gray-50 pt-24 pb-16">
+      <Helmet>
+        <title>Memuat Produk... | PT Trisena</title>
+        <meta name="description" content="Sedang memuat detail produk dari PT Trisena Rekainova Sinergi." />
+      </Helmet>
+      {/* ---------------------------- */}
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12">
             <Skeleton className="aspect-square rounded-3xl" />
             <div className="space-y-6">
@@ -55,6 +62,10 @@ export default function ProductDetail() {
   if (!product) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center pt-20">
+        <Helmet>
+          <title>Produk Tidak Ditemukan | PT Trisena</title>
+          <meta name="robots" content="noindex" />
+        </Helmet>
         <div className="text-center bg-white p-12 rounded-3xl border border-gray-200 shadow-sm max-w-md mx-auto">
           <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <Beaker className="w-10 h-10 text-gray-400" />
@@ -80,6 +91,15 @@ export default function ProductDetail() {
   return (
     <div className="min-h-screen bg-gray-50 pt-20" itemScope itemType="https://schema.org/Product">
       
+      <Helmet>
+        <title>{product.name} - Spesifikasi & Harga | PT Trisena</title>
+        <meta name="description" content={product.short_description || `Beli ${product.name} kualitas terbaik standar ISO di PT Trisena Rekainova Sinergi.`} />
+        <meta property="og:title" content={product.name} />
+        <meta property="og:description" content={product.short_description} />
+        <meta property="og:image" content={formattedImageUrl} />
+      </Helmet>
+      {/* ---------------------------- */}
+
       {/* Breadcrumb */}
       <div className="bg-white border-b shadow-sm sticky top-[64px] z-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -138,12 +158,12 @@ export default function ProductDetail() {
               <span className="inline-block bg-teal-50 text-teal-700 font-bold text-xs uppercase tracking-wider px-3 py-1 rounded-full mb-4">
                 {product.category?.replace(/_/g, ' ')}
               </span>
+              
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 leading-tight" itemProp="name">
                 {product.name}
               </h1>
             </div>
 
-            {/* Sembunyikan harga jika ini adalah layanan jasa */}
             {!isService && (
               <div itemProp="offers" itemScope itemType="https://schema.org/Offer" className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
                 <span className="block text-sm font-medium text-gray-500 mb-1">Estimasi Harga Mulai Dari</span>
@@ -168,9 +188,9 @@ export default function ProductDetail() {
             {/* Features */}
             {product.features?.length > 0 && (
               <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
-                <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
+                <h2 className="font-bold text-gray-900 mb-4 flex items-center gap-2 text-xl">
                   <Award className="w-5 h-5 text-teal-600" /> Keunggulan Fitur
-                </h3>
+                </h2>
                 <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {product.features.map((feature, index) => (
                     <li key={index} className="flex items-start gap-3 text-sm text-gray-600 font-medium">
@@ -182,13 +202,12 @@ export default function ProductDetail() {
               </div>
             )}
 
-            {/* Customizer untuk Produk Fisik ATAU Tombol WhatsApp untuk Jasa */}
             {!isService ? (
               <div className="bg-white rounded-3xl p-6 shadow-lg shadow-gray-200/50 border border-gray-200">
-                <h3 className="font-bold text-gray-900 mb-6 flex items-center gap-2 text-lg">
+                <h2 className="font-bold text-gray-900 mb-6 flex items-center gap-2 text-xl">
                   <Beaker className="w-6 h-6 text-teal-600" />
                   Konfigurasi Pesanan Anda
-                </h3>
+                </h2>
                 <ProductCustomizer product={product} onAddToCart={handleAddToCart} />
               </div>
             ) : (
@@ -196,7 +215,7 @@ export default function ProductDetail() {
                 <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
                   <Phone className="w-8 h-8 text-teal-600" />
                 </div>
-                <h3 className="font-bold text-teal-900 mb-3 text-2xl">Konsultasikan Kebutuhan Anda</h3>
+                <h2 className="font-bold text-teal-900 mb-3 text-2xl">Konsultasikan Kebutuhan Anda</h2>
                 <p className="text-teal-700 mb-8 leading-relaxed">
                   Layanan <b>{product.name}</b> memerlukan analisis mendalam dan pendekatan khusus. Silakan hubungi tim ahli kami untuk mendapatkan survei, konsultasi gratis, dan penawaran yang tepat sasaran.
                 </p>
@@ -211,7 +230,6 @@ export default function ProductDetail() {
               </div>
             )}
 
-            {/* Tampilkan WhatsApp Banner biasa untuk produk fisik */}
             {!isService && (
               <div className="bg-gradient-to-br from-teal-600 to-teal-800 rounded-3xl p-8 text-white shadow-xl shadow-teal-900/20">
                 <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 text-center sm:text-left">
@@ -219,7 +237,7 @@ export default function ProductDetail() {
                     <MessageCircle className="w-8 h-8 text-white" />
                   </div>
                   <div className="flex-1">
-                    <h4 className="text-xl font-bold mb-2">Butuh Konsultasi Lab?</h4>
+                    <h2 className="text-2xl font-bold mb-2">Butuh Konsultasi Lab?</h2>
                     <p className="text-teal-100 mb-6 leading-relaxed">
                       Tim engineer kami siap membantu Anda menyesuaikan spesifikasi {product.name} agar tepat sasaran dengan standar lab Anda.
                     </p>
@@ -236,7 +254,7 @@ export default function ProductDetail() {
               </div>
             )}
 
-            {/* Delivery Info: Sembunyikan untuk Jasa karena mereka tidak dikirim via paket */}
+            {/* Delivery Info */}
             {!isService && (
               <div className="flex items-center gap-3 text-sm font-medium text-gray-500 bg-gray-100 px-5 py-3 rounded-xl">
                 <Clock className="w-5 h-5 text-gray-400" />

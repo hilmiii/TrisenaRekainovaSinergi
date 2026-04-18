@@ -6,6 +6,7 @@ import { Search, Filter, Beaker } from 'lucide-react';
 import { Input } from '@/Components/ui/input';
 import { Skeleton } from '@/Components/ui/skeleton';
 import ProductCard from '@/Components/catalog/ProductCard';
+import { Helmet } from 'react-helmet-async';
 
 export default function Catalog() {
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -36,6 +37,11 @@ export default function Catalog() {
 
   return (
     <div className="min-h-screen bg-gray-50 pt-20">
+    {/* --- TAMBAHAN SEO --- */}
+    <Helmet>
+      <title>Katalog Produk Laboratorium - PT Trisena</title>
+      <meta name="description" content="Jelajahi berbagai produk andalan kami seperti Fume Hood Prosafeaire, Laminar Air Flow, dan perlengkapan safety laboratorium lainnya." />
+    </Helmet>
       {/* Hero Banner */}
       {/* Hero Banner */}
       <section className="bg-slate-900 py-20 relative overflow-hidden">

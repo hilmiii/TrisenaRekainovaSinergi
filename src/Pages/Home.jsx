@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
 import { motion } from 'framer-motion';
+import { Helmet } from 'react-helmet-async';
 import { 
   ArrowRight, 
   Beaker, 
@@ -48,6 +49,12 @@ export default function Home() {
 
   return (
     <div className="overflow-hidden pt-20">
+    {/* --- TAMBAHAN SEO --- */}
+    <Helmet>
+      <title>Beranda - PT Trisena Rekainova Sinergi</title>
+      <meta name="description" content="Selamat datang di PT. Trisena Rekainova Sinergi. Kami adalah spesialis pembuatan dan perancangan Lemari Asam dan infrastruktur laboratorium." />
+    </Helmet>
+    {/* -------------------- */}
       {/* Hero Section */}
       <section className="relative min-h-[80vh] flex items-center bg-gradient-to-br from-gray-900 via-gray-800 to-teal-900">
         <div className="absolute inset-0 opacity-20">
