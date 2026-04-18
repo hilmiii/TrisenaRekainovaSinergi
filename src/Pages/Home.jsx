@@ -20,29 +20,29 @@ export default function Home() {
       name: "Lemari Asam Prosafeaire",
       subtitle: "Multipurpose Fume Hood",
       description: "Lemari asam berkualitas tinggi dengan sistem ventilasi canggih untuk keamanan laboratorium kimia Anda",
-      image: "/img/lemariAsam.jpg", // Memanggil langsung dari folder public
+      image: "/img/lemariAsam.jpg", 
       features: ["Sistem Exhaust Optimal", "Material Tahan Korosi", "Desain Ergonomis"]
     },
     {
       name: "Laminar Air Flow Prosafeaire",
       subtitle: "Clean Bench System",
       description: "Meja kerja steril dengan aliran udara laminar untuk kemurnian sampel laboratorium maksimal",
-      image: "/img/laminarAirFlow.jpg", // Memanggil langsung dari folder public
+      image: "/img/laminarAirFlow.jpg", 
       features: ["HEPA Filter Grade H14", "UV Sterilization", "Low Noise Operation"]
     },
     {
       name: "Fume Hood Scrubber Prosafeaire",
       subtitle: "Air Purification System",
       description: "Sistem scrubber handal untuk menyaring udara buangan lemari asam dan menjaga lingkungan",
-      image: "/img/fumeHood.jpg", // Memanggil langsung dari folder public
+      image: "/img/fumeHood.jpg",
       features: ["Multi-Stage Filtration", "Chemical Neutralizer", "Eco-Friendly"]
     }
   ];
 
   const stats = [
-    { number: "500+", label: "Proyek Selesai" },
+    { number: "200+", label: "Proyek Selesai" },
     { number: "15+", label: "Tahun Pengalaman" },
-    { number: "200+", label: "Klien Puas" },
+    { number: "150+", label: "Klien Puas" },
     { number: "50+", label: "Kota di Indonesia" }
   ];
 
@@ -69,7 +69,7 @@ export default function Home() {
                 Furniture <span className="text-teal-500">Laboratorium</span> Berkualitas Tinggi
               </h1>
               <p className="text-xl text-gray-300 mb-8 leading-relaxed">
-                Produsen Lemari Asam, Laminar Air Flow, dan Fume Hood Scrubber terpercaya 
+                Produsen Lemari Asam, Laminar Air Flow, Fume Hood Scrubber, dan Mobile Lab Container terpercaya 
                 untuk laboratorium modern Indonesia. Memenuhi standar Good Laboratory Practice.
               </p>
               <div className="flex flex-wrap gap-4">
@@ -109,7 +109,7 @@ export default function Home() {
                   </div>
                   <div>
                     <p className="font-bold text-gray-900">Garansi Produk</p>
-                    <p className="text-sm text-gray-500">Hingga 5 Tahun</p>
+                    <p className="text-sm text-gray-500">Hingga 6 bulan</p>
                   </div>
                 </div>
               </div>
@@ -152,10 +152,10 @@ export default function Home() {
               Produk Unggulan
             </span>
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mt-3 mb-4">
-              Furniture Laboratorium Prosafeaire
+              Lemari Asam Laboratorium Prosafeaire
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Solusi lengkap untuk kebutuhan fasilitas dasar laboratorium dengan standar internasional
+              Solusi lengkap untuk kebutuhan perangkat dasar laboratorium dengan standar nasional
             </p>
           </motion.div>
 
@@ -235,8 +235,8 @@ export default function Home() {
               <div className="space-y-6">
                 {[
                   { icon: Beaker, title: "Kualitas Lab Grade", desc: "Material tahan korosi dan kimia untuk penggunaan jangka panjang" },
-                  { icon: Shield, title: "Garansi Produk", desc: "Garansi hingga 5 tahun untuk semua produk Prosafeaire" },
-                  { icon: Award, title: "Sertifikasi", desc: "Memenuhi standar keselamatan laboratorium internasional" },
+                  { icon: Shield, title: "Garansi Produk", desc: "Garansi hingga 6 bulan untuk semua produk Prosafeaire" },
+                  { icon: Award, title: "Sertifikasi", desc: "Memenuhi standar keselamatan laboratorium nasional" },
                   { icon: Users, title: "Tim Ahli", desc: "Konsultasi gratis dengan tim engineer berpengalaman" }
                 ].map((item, index) => (
                   <motion.div
@@ -266,7 +266,7 @@ export default function Home() {
               className="relative"
             >
               <img
-                src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800"
+                src="/img/home.jpg"
                 alt="Laminar Air Flow - Laboratorium Modern"
                 className="rounded-2xl shadow-xl"
               />
@@ -291,7 +291,7 @@ export default function Home() {
               Siap Membangun Laboratorium Impian Anda?
             </h2>
             <p className="text-xl text-teal-100 mb-8">
-              Konsultasikan kebutuhan lemari asam, laminar air flow, dan furniture laboratorium 
+              Konsultasikan kebutuhan lemari asam, laminar air flow, scrubber dan furnitur laboratorium 
               lainnya dengan tim ahli kami secara gratis.
             </p>
             <div className="flex flex-wrap justify-center gap-4">

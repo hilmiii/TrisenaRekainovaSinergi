@@ -26,7 +26,7 @@ export default function Footer() {
             <p className="text-gray-400 mb-6 leading-relaxed" itemProp="description">
               Kami adalah produsen furniture laboratorium berkualitas tinggi. 
               Produk unggulan kami meliputi Lemari Asam Prosafeaire, Laminar Air Flow Prosafeaire, 
-              dan Fume Hood Scrubber Prosafeaire untuk memenuhi standar Good Laboratory Practice.
+              Fume Hood Scrubber Prosafeaire, dan Mobile Container Laboratorium untuk memenuhi standar Good Laboratory Practice.
             </p>
             <div className="flex gap-4">
               <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-800 hover:bg-teal-600 rounded-full flex items-center justify-center transition-colors">
@@ -67,7 +67,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link to={createPageUrl('Catalog')} className="hover:text-teal-400 transition-colors">
-                  Meja Laboratorium
+                  Mobile Container Laboratorium
                 </Link>
               </li>
             </ul>

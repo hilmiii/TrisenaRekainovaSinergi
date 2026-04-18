@@ -28,9 +28,8 @@ export default function AdminLogin() {
 
       // 3. Verifikasi Keamanan: Apakah dia benar-benar Admin?
       if (user.role === 'admin' || user.is_admin) {
-        navigate('/admin/dashboard'); // Jika ya, masuk ke Dashboard
+        navigate('/admin/dashboard'); 
       } else {
-        // Jika akun biasa mencoba masuk lewat jalur ini, tendang keluar!
         await base44.post('/logout');
         localStorage.removeItem('auth_token');
         setError('Akses Ditolak: Kredensial tidak memiliki hak akses Administrator.');

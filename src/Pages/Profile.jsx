@@ -58,7 +58,6 @@ export default function Profile() {
     } finally {
       localStorage.removeItem('auth_token'); 
       
-      // TAMBAHAN: Pastikan keranjang guest dibersihkan saat logout dari halaman Profil
       localStorage.removeItem('trisena_cart_guest');
       
       window.location.href = '/'; 
@@ -69,8 +68,8 @@ export default function Profile() {
     setIsSaving(true);
     try {
       const response = await base44.put('/user/profile', editForm);
-      setUser(response.data.user); // Update state user dengan data baru
-      setIsEditing(false); // Tutup mode edit
+      setUser(response.data.user); 
+      setIsEditing(false);
     } catch (error) {
       alert("Gagal menyimpan profil. Silakan coba lagi.");
       console.error(error);

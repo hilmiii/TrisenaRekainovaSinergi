@@ -10,10 +10,8 @@ export default function Layout({ children, currentPageName }) {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [orderCount, setOrderCount] = useState(0);
   
-  // State keranjang sekarang dimulai dari kosong, menuggu data user dimuat
   const [cartItems, setCartItems] = useState([]);
   
-  // State penjaga (Gatekeeper) agar keranjang tidak tertimpa sebelum data dimuat
   const [isCartLoaded, setIsCartLoaded] = useState(false);
 
   // 1. LOAD USER & KERANJANG SPESIFIK
@@ -33,29 +31,24 @@ export default function Layout({ children, currentPageName }) {
         localStorage.removeItem('auth_token');
       }
 
-      // Tentukan nama 'kunci' memori berdasarkan user yang login
       const cartKey = currentUser ? `trisena_cart_${currentUser.id}` : 'trisena_cart_guest';
       
-      // Ambil keranjang milik user tersebut
       const savedCart = localStorage.getItem(cartKey);
       if (savedCart) {
         setCartItems(JSON.parse(savedCart));
       }
       
-      // Beri tanda bahwa keranjang sudah selesai dimuat
       setIsCartLoaded(true);
     };
 
     loadUserAndCart();
   }, []);
 
-  // TAMBAHKAN KODE INI: Menarik jumlah riwayat pesanan setiap kali user terdeteksi login
   useEffect(() => {
     const fetchOrderCount = async () => {
-      if (user && user.role !== 'admin') { // Admin tidak butuh badge pesanan saya
+      if (user && user.role !== 'admin') {
         try {
           const response = await base44.get('/my-orders');
-          // Hitung jumlah pesanan (faktur) yang unik
           const uniqueOrders = new Set(response.data.map(item => item.order_number));
           setOrderCount(uniqueOrders.size);
         } catch (error) {
@@ -68,7 +61,7 @@ export default function Layout({ children, currentPageName }) {
 
   // 2. AUTO-SAVE KERANJANG SPESIFIK (Hanya berjalan jika keranjang sudah dimuat)
   useEffect(() => {
-    if (!isCartLoaded) return; // Cegah penyimpanan prematur
+    if (!isCartLoaded) return; 
 
     const cartKey = user ? `trisena_cart_${user.id}` : 'trisena_cart_guest';
     localStorage.setItem(cartKey, JSON.stringify(cartItems));
@@ -111,18 +104,12 @@ const handleLogout = async () => {
       console.error("Logout error", error);
     } finally {
       localStorage.removeItem('auth_token');
-      
-      // PERBAIKAN 1: Bersihkan juga memori keranjang guest agar benar-benar kosong saat logout
       localStorage.removeItem('trisena_cart_guest');
-
-      // PERBAIKAN 2: Kita HAPUS baris setUser(null) di sini agar mesin Auto-Save 
-      // tidak salah paham dan menimpa keranjang guest sebelum halaman di-refresh.
 
       window.location.href = '/'; 
     }
   };
 
-  // Halaman Admin tidak menggunakan layout reguler (Header/Footer publik)
   const isAdminPage = currentPageName?.startsWith('Admin');
   const isAuthPage = currentPageName === 'CompleteProfile';
   

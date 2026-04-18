@@ -46,8 +46,8 @@ function AbstractCanvas() {
     // Partikel
     const PARTICLE_COUNT = 28;
     const particles = Array.from({ length: PARTICLE_COUNT }, (_, i) => ({
-      angleFactor : Math.random(),       // posisi awal di orbit
-      orbitIdx    : i % rings.length,    // ikut ring mana
+      angleFactor : Math.random(),       
+      orbitIdx    : i % rings.length,    
       r           : 1.5 + Math.random() * 2,
       pulseOffset : Math.random() * Math.PI * 2,
       pulseSpeed  : 0.6 + Math.random() * 0.8,
@@ -69,7 +69,7 @@ function AbstractCanvas() {
     const draw = (ts) => {
       const dt = ts - timeRef.current;
       timeRef.current = ts;
-      const t = ts * 0.001; // detik
+      const t = ts * 0.001; 
 
       const W = canvas.width;
       const H = canvas.height;

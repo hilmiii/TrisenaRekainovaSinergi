@@ -33,8 +33,7 @@ export default function Contact() {
               Ada Pertanyaan Tentang <span className="text-teal-400">Furniture Laboratorium</span>?
             </h1>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Tim kami siap membantu konsultasi kebutuhan lemari asam, laminar air flow, 
-              dan furniture laboratorium lainnya untuk laboratorium Anda.
+              Tim kami siap membantu konsultasi kebutuhan lemari asam, laminar air flow, scrubber, furniture laboratorium dan mobile container laboratorium untuk Anda.
             </p>
           </motion.div>
         </div>
@@ -56,8 +55,7 @@ export default function Contact() {
                   Informasi Kontak
                 </h2>
                 <p className="text-gray-600">
-                  Hubungi kami untuk konsultasi gratis mengenai kebutuhan furniture 
-                  laboratorium Prosafeaire Anda.
+                  Hubungi kami untuk konsultasi gratis mengenai kebutuhan furniture dan perangkat dasar laboratorium Prosafeaire Anda.
                 </p>
               </div>
 
@@ -209,7 +207,7 @@ export default function Contact() {
       {/* Map Section */}
       <section className="h-96 bg-gray-200">
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3963.6731728082744!2d106.85234707475385!3d-6.567499593427604!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69c5f5e0b7c7f5%3A0x7c2a3c3b1c5c3c3c!2sJl.%20Raya%20Tapos%2C%20Tapos%2C%20Kec.%20Cimanggis%2C%20Kota%20Depok%2C%20Jawa%20Barat!5e0!3m2!1sen!2sid!4v1699999999999!5m2!1sen!2sid"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1248.8265234710798!2d106.89225039953679!3d-6.422717454076012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69ebff1177fb53%3A0x56e21f10fb9d1fe6!2sHybrid%20Office%20-%20Virtual%20Office%20Depok!5e0!3m2!1sid!2sid!4v1776502916670!5m2!1sid!2sid"
           width="100%"
           height="100%"
           style={{ border: 0 }}

@@ -32,7 +32,7 @@ export default function ResetPassword() {
         token,
         email,
         password,
-        password_confirmation: passwordConfirmation // Laravel mewajibkan ini untuk validasi 'confirmed'
+        password_confirmation: passwordConfirmation
       });
       
       alert('Password berhasil diubah! Silakan login.');

@@ -18,7 +18,7 @@ export default function About() {
   const values = [
     {
       icon: Award,
-      title: "Kualitas Terjamin",
+      title: "Standar Nasional",
       description: "Semua produk furniture laboratorium kami menggunakan material berkualitas tinggi dengan standar internasional"
     },
     {
@@ -44,8 +44,7 @@ export default function About() {
     "Laminar Air Flow Prosafeaire Clean Bench",
     "Fume Hood Scrubber Prosafeaire",
     "Furnitur Laboratorium Prosafeaire FurniLab",
-    "Meja Laboratorium dengan Material Tahan Korosi",
-    "Kabinet Penyimpanan Bahan Kimia",
+    "Mobile Container Lab",
     "Relokasi Laboratorium TRS LabMover",
     "Perawatan Rutin Laboratorium TRS LabCare"
   ];
@@ -67,8 +66,7 @@ export default function About() {
               PT. Trisena Rekainova Sinergi
             </h1>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Inspiring Solutions for Innovative Laboratories - Produsen furniture laboratorium 
-              terpercaya di Indonesia sejak 2008
+              Inspiring Solutions for Innovative Laboratories - Produsen furnitur laboratorium dan perangkat dasar laboratorium sejak 2012
             </p>
           </motion.div>
         </div>
@@ -88,16 +86,14 @@ export default function About() {
               </h2>
               <div className="prose prose-lg text-gray-600">
                 <p>
-                  PT. Trisena Rekainova Sinergi adalah perusahaan yang bergerak di bidang 
-                  pembuatan furniture laboratorium berkualitas tinggi. Dengan merek dagang 
+                  PT. Trisena Rekainova Sinergi adalah perusahaan yang bergerak dibidang pembuatan furnitur laboratorium dan perangkat dasar laboratorium berkualitas tinggi. Dengan merek dagang 
                   <strong> Prosafeaire</strong>, kami telah melayani ratusan laboratorium 
                   di seluruh Indonesia.
                 </p>
                 <p>
                   Produk unggulan kami meliputi <strong>Lemari Asam (Fume Hood)</strong>, 
                   <strong> Laminar Air Flow</strong>, dan <strong>Fume Hood Scrubber</strong> 
-                  yang dirancang untuk memenuhi standar Good Laboratory Practice (GLP) 
-                  internasional.
+                  yang dirancang untuk memenuhi standar Good Laboratory Practice (GLP).
                 </p>
                 <p>
                   Kami tidak hanya memproduksi furniture laboratorium, tetapi juga menyediakan 
@@ -114,7 +110,7 @@ export default function About() {
               className="grid grid-cols-2 gap-6"
             >
               <div className="bg-teal-50 rounded-2xl p-6 text-center">
-                <p className="text-4xl font-bold text-teal-600">500+</p>
+                <p className="text-4xl font-bold text-teal-600">200+</p>
                 <p className="text-gray-600 mt-2">Proyek Selesai</p>
               </div>
               <div className="bg-teal-50 rounded-2xl p-6 text-center">
@@ -122,7 +118,7 @@ export default function About() {
                 <p className="text-gray-600 mt-2">Tahun Pengalaman</p>
               </div>
               <div className="bg-teal-50 rounded-2xl p-6 text-center">
-                <p className="text-4xl font-bold text-teal-600">200+</p>
+                <p className="text-4xl font-bold text-teal-600">150+</p>
                 <p className="text-gray-600 mt-2">Klien Puas</p>
               </div>
               <div className="bg-teal-50 rounded-2xl p-6 text-center">
@@ -223,8 +219,8 @@ export default function About() {
               Mari Wujudkan Laboratorium Impian Anda
             </h2>
             <p className="text-xl text-teal-100 mb-8">
-              Konsultasikan kebutuhan lemari asam, laminar air flow, dan furniture 
-              laboratorium lainnya dengan tim ahli kami.
+              Konsultasikan kebutuhan lemari asam, laminar air flow, furnitur
+              laboratorium, dan mobile container laboratorium dengan tim ahli kami.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link to={createPageUrl('Catalog')}>

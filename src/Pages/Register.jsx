@@ -16,7 +16,7 @@ export default function Register() {
     name: '',
     email: '',
     password: '',
-    password_confirmation: '' // Diperlukan oleh validasi Laravel
+    password_confirmation: '' 
   });
 
   const handleChange = (e) => {
@@ -36,9 +36,7 @@ export default function Register() {
 
     try {
       const response = await base44.post('/register', formData);
-      // Simpan token ke localStorage
       localStorage.setItem('auth_token', response.data.token);
-      // Redirect ke halaman Checkout atau Home
       const redirectUrl = localStorage.getItem('redirect_after_login') || 'Home';
       navigate(createPageUrl(redirectUrl));
     } catch (error) {

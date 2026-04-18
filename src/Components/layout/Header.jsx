@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { Button } from '@/Components/ui/button';
-import { ShoppingCart, Menu, X, User, LogOut, Package } from 'lucide-react'; // Hapus Beaker dari sini karena sudah tidak dipakai
+import { ShoppingCart, Menu, X, User, LogOut, Package } from 'lucide-react'; 
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Header({ cartItemCount, orderCount, onCartClick, user, onLogout }) {
@@ -10,7 +10,6 @@ export default function Header({ cartItemCount, orderCount, onCartClick, user, o
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
 
-  // Deteksi status login dari token atau prop user
   const isAuthenticated = !!localStorage.getItem('auth_token') || !!user;
 
   useEffect(() => {
@@ -74,8 +73,6 @@ export default function Header({ cartItemCount, orderCount, onCartClick, user, o
 
           {/* Actions */}
           <div className="flex items-center gap-3">
-            
-            {/* Tombol Pesanan Saya (Hanya tampil jika User sudah Login) */}
             {isAuthenticated && (
               <Link
                 to="/my-orders"
@@ -83,7 +80,6 @@ export default function Header({ cartItemCount, orderCount, onCartClick, user, o
                 title="Pesanan Saya"
               >
                 <Package className="w-6 h-6 text-gray-700" />
-                {/* TAMBAHKAN BADGE ANGKA INI */}
                 {orderCount > 0 && (
                   <span className="absolute -top-1 -right-1 w-5 h-5 bg-orange-500 text-white text-xs font-bold rounded-full flex items-center justify-center shadow-sm">
                     {orderCount}
@@ -95,7 +91,7 @@ export default function Header({ cartItemCount, orderCount, onCartClick, user, o
            {/* Tombol Keranjang */}
             <button
               onClick={onCartClick}
-              data-cy="tombol-keranjang-header" // <--- TAMBAHKAN TANDA PENGENAL INI
+              data-cy="tombol-keranjang-header" 
               className="relative p-2 hover:bg-gray-100 rounded-full transition-colors"
               title="Keranjang Belanja"
             >
@@ -111,7 +107,6 @@ export default function Header({ cartItemCount, orderCount, onCartClick, user, o
             <div className="hidden sm:flex items-center gap-2 border-l border-gray-200 pl-3 ml-1">
               {isAuthenticated ? (
                 <>
-                  {/* Tampilkan tombol dashboard ekstra jika user adalah admin */}
                   {(user?.role === 'admin' || user?.is_admin) && (
                     <Link to="/admin/dashboard">
                       <Button variant="outline" size="sm" className="hidden lg:flex border-teal-200 text-teal-700 hover:bg-teal-50">

@@ -51,7 +51,7 @@ export default function Catalog() {
             </h1>
             <p className="text-lg text-slate-300 mb-8 leading-relaxed">
               Temukan koleksi lengkap Lemari Asam, Laminar Air Flow, Fume Hood Scrubber, 
-              dan berbagai furniture laboratorium lainnya dengan standar internasional.
+              dan berbagai furniture laboratorium lainnya dengan standar nasional.
             </p>
           </motion.div>
         </div>
