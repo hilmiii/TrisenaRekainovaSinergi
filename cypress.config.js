@@ -1,12 +1,15 @@
+// cypress.config.js
 import { defineConfig } from "cypress";
 
 export default defineConfig({
+  reporter: 'cypress-mochawesome-reporter',
   e2e: {
-    baseUrl: 'http://localhost:5173', // Sesuaikan dengan port Vite Anda
+    baseUrl: 'https://trisena-rekainova-sinergi.vercel.app', // URL Vercel Anda
     setupNodeEvents(on, config) {
-      // implement node event listeners here
+      require('cypress-mochawesome-reporter/plugin')(on);
     },
     viewportWidth: 1280,
     viewportHeight: 720,
+    defaultCommandTimeout: 10000, // Menambah waktu tunggu (timeout) untuk antisipasi loading di production
   },
 });
