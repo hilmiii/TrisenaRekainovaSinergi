@@ -230,7 +230,7 @@ export default function About() {
                 </Button>
               </Link>
               <Link to={createPageUrl('Contact')}>
-                <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
+                <Button size="lg" variant="outline" className="bg-green-600 text-white hover:bg-white">
                   <Phone className="w-5 h-5 mr-2" />
                   Hubungi Kami
                 </Button>
