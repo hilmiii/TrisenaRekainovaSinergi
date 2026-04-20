@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin-dashboard
+Disallow: /checkout
+Disallow: /my-orders
+
+Sitemap: https://trisena-rekainova-sinergi.com/sitemap.xml
