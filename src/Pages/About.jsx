@@ -92,7 +92,8 @@ export default function About() {
                 </p>
                 <p>
                   Produk unggulan kami meliputi <strong>Lemari Asam (Fume Hood)</strong>, 
-                  <strong> Laminar Air Flow</strong>, dan <strong>Fume Hood Scrubber</strong> 
+                  <strong> Laminar Air Flow</strong>, <strong>Fume Hood Scrubber </strong>dan
+                  <strong> Mobile Container Laboratorium </strong> 
                   yang dirancang untuk memenuhi standar Good Laboratory Practice (GLP).
                 </p>
                 <p>

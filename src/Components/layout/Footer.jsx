@@ -121,6 +121,7 @@ export default function Footer() {
               <span>Laminar Air Flow</span>
               <span>Fume Hood Scrubber</span>
               <span>Furniture Laboratorium</span>
+              <span>Mobile Container Laboratorium</span>
             </div>
           </div>
         </div>
