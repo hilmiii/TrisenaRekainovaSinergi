@@ -174,10 +174,20 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.15 }}
-                className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow group"
+                className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow group flex flex-col"
                 itemScope
                 itemType="https://schema.org/Product"
               >
+                {/* --- TAMBAHAN META TAG TERSEMBUNYI UNTUK GOOGLE SEO --- */}
+                <meta itemProp="brand" content="Prosafeaire" />
+                <div itemProp="offers" itemScope itemType="https://schema.org/Offer" className="hidden">
+                  <meta itemProp="price" content="0" /> 
+                  <meta itemProp="priceCurrency" content="IDR" />
+                  <meta itemProp="availability" content="https://schema.org/PreOrder" />
+                  <link itemProp="url" href={`https://trisena-rekainova-sinergi.com/catalog`} />
+                </div>
+                {/* -------------------------------------------------------- */}
+
                 <div className="aspect-[4/3] overflow-hidden">
                   <img
                     src={product.image}
@@ -186,27 +196,27 @@ export default function Home() {
                     itemProp="image"
                   />
                 </div>
-                <div className="p-6">
+                <div className="p-6 flex flex-col flex-grow">
                   <span className="text-xs text-teal-600 font-semibold uppercase tracking-wider">
                     {product.subtitle}
                   </span>
                   <h3 className="text-xl font-bold text-gray-900 mt-2 mb-3" itemProp="name">
                     {product.name}
                   </h3>
-                  <p className="text-gray-600 mb-4" itemProp="description">
+                  <p className="text-gray-600 mb-4 flex-grow" itemProp="description">
                     {product.description}
                   </p>
                   <ul className="space-y-2 mb-6">
                     {product.features.map((feature) => (
                       <li key={feature} className="flex items-center gap-2 text-sm text-gray-600">
-                        <CheckCircle className="w-4 h-4 text-teal-500" />
+                        <CheckCircle className="w-4 h-4 text-teal-500 flex-shrink-0" />
                         {feature}
                       </li>
                     ))}
                   </ul>
                   <Link 
                     to={createPageUrl('Catalog')}
-                    className="inline-flex items-center text-teal-600 font-semibold hover:gap-3 transition-all"
+                    className="inline-flex items-center text-teal-600 font-semibold hover:gap-3 transition-all mt-auto"
                   >
                     Lihat Detail
                     <ArrowRight className="ml-2 w-4 h-4" />
