@@ -162,12 +162,17 @@ export default function ProductDetail() {
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 leading-tight" itemProp="name">
                 {product.name}
               </h1>
+              
+              {/* --- TAMBAHAN BRAND & SKU UNTUK GOOGLE SEO --- */}
+              <meta itemProp="brand" content="Prosafeaire" />
+              <meta itemProp="sku" content={`TRS-${product.id || productId}`} />
+              {/* --------------------------------------------- */}
             </div>
 
             {!isService && (
               <div itemProp="offers" itemScope itemType="https://schema.org/Offer" className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
                 <span className="block text-sm font-medium text-gray-500 mb-1">Estimasi Harga Mulai Dari</span>
-                <p className="text-4xl font-extrabold text-teal-600 tracking-tight" itemProp="price">
+                <p className="text-4xl font-extrabold text-teal-600 tracking-tight">
                   {product.base_price 
                     ? new Intl.NumberFormat('id-ID', { 
                         style: 'currency', 
@@ -176,7 +181,14 @@ export default function ProductDetail() {
                       }).format(product.base_price)
                     : 'Rp 0'}
                 </p>
+                
+                {/* --- TAMBAHAN META DATA OFFERS UNTUK GOOGLE --- */}
+                <meta itemProp="price" content={product.base_price || "0"} />
                 <meta itemProp="priceCurrency" content="IDR" />
+                <meta itemProp="availability" content="https://schema.org/PreOrder" />
+                <link itemProp="url" href={window.location.href} />
+                {/* ---------------------------------------------- */}
+                
                 <p className="text-sm text-gray-400 mt-2">* Harga final menyesuaikan dengan opsi material & dimensi yang dipilih</p>
               </div>
             )}
