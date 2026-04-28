@@ -4,7 +4,7 @@ import { defineConfig } from "cypress";
 export default defineConfig({
   reporter: 'cypress-mochawesome-reporter',
   e2e: {
-    baseUrl: 'https://trisena-rekainova-sinergi.vercel.app', // URL Vercel Anda
+    baseUrl: 'https://trisena-rekainova-sinergi.com', // URL Vercel Anda
     setupNodeEvents(on, config) {
       require('cypress-mochawesome-reporter/plugin')(on);
     },

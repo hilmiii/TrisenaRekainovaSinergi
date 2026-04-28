@@ -1,53 +1,126 @@
-describe('Customer E2E Flow: Journey Lengkap dari Login ke Checkout', () => {
+describe('Customer E2E Flow dengan My Orders dan Riwayat Pembelian', () => {
   
-  it('Berhasil melakukan alur belanja lengkap melalui antarmuka pengguna', () => {
-    // 1. Mulai dari Halaman Utama
-    cy.visit('/');
-
-    // 2. Alur Login Manual (karena visit /login langsung dilarang/404)
-    cy.contains('Masuk').click();
-    cy.url().should('include', '/login');
-    
-    cy.get('input[type="email"]').type('hilmiawananggoro189@Gmail.com');
-    cy.get('input[type="password"]').type('tenetoperasator');
-    cy.get('form').contains('button', 'Masuk').click();
-
-    // Pastikan kembali ke Home setelah login
-    cy.url().should('eq', Cypress.config().baseUrl + '/');
-
-    // 3. Navigasi ke Katalog melalui Header
-    // Mencari link 'Katalog' di dalam komponen Header
-    cy.get('nav').contains('Katalog').click();
-    cy.url().should('include', '/catalog');
-
-    // 4. Pilih Produk pertama di Katalog
-    // Mengklik link produk yang dihasilkan oleh ProductCard
-    cy.get('a[href^="/product/"]').first().click();
-    cy.url().should('include', '/product/');
-
-    // 5. Tambahkan ke Keranjang
-    cy.contains('button', 'Masukkan ke Keranjang').click();
-
-    // Verifikasi Alert Berhasil
-    cy.on('window:alert', (text) => {
-      expect(text).to.contains('Berhasil');
+  describe('Validasi My Orders Saat Belum Ada Pesanan', () => {
+    beforeEach(() => {
+      cy.visit('/');
+      cy.contains('button', 'Masuk', { timeout: 10000 }).click();
+      cy.get('input[type="email"]').clear().type('hilmiawananggoro189@gmail.com');
+      cy.get('input[type="password"]').clear().type('Tenetoperasator_180903');
+      cy.get('form').submit();
+      cy.url({ timeout: 10000 }).should('not.include', '/login');
     });
 
-    // 6. Buka Drawer Keranjang melalui Icon di Header
-    // Menggunakan selektor data-cy yang sudah Anda siapkan sebelumnya
-    cy.get('[data-cy="tombol-keranjang-header"]').click({ force: true });
+    it('Menampilkan pesan kosong saat belum ada pesanan', () => {
+      cy.get('a[title="Pesanan Saya"]', { timeout: 10000 }).click();
+      cy.url().should('include', '/my-orders');
+      
+      cy.contains('Belum ada pesanan', { timeout: 5000 }).should('be.visible');
+      cy.contains('Mulai Belanja', { timeout: 5000 }).should('be.visible');
+    });
+  });
 
-    // 7. Klik tombol Checkout di dalam Drawer
-    // Tombol ini terdapat dalam komponen CartDrawer
-    cy.contains('button', 'Checkout').click();
-    cy.url().should('include', '/checkout');
+  describe('Validasi My Orders Setelah Membuat Pesanan', () => {
+    beforeEach(() => {
+      cy.visit('/');
+      cy.contains('button', 'Masuk', { timeout: 10000 }).click();
+      cy.get('input[type="email"]').clear().type('hilmiawananggoro189@gmail.com');
+      cy.get('input[type="password"]').clear().type('Tenetoperasator_180903');
+      cy.get('form').submit();
+      cy.url({ timeout: 10000 }).should('not.include', '/login');
 
-    // 8. Proses Pesanan di Halaman Checkout
-    // Menekan tombol final yang ada di Pages/Checkout.jsx
-    cy.contains('button', 'Proses Pesanan Sekarang').click();
+      cy.get('nav').contains('Katalog Produk').click();
+      cy.get('a[href^="/product/"]').first().click({ force: true });
+      
+      cy.on('window:alert', (text) => {
+        expect(text).to.contains('Berhasil');
+      });
+      cy.contains('button', 'Masukkan ke Keranjang').click();
+      
+      cy.get('[data-cy="tombol-keranjang-header"]').click({ force: true });
+      cy.contains('button', 'Checkout').click();
+      cy.contains('button', 'Proses Pesanan Sekarang').click();
+      cy.contains('Pesanan Berhasil!', { timeout: 15000 }).should('be.visible');
+      
+      cy.contains('button', 'Kembali ke Beranda').click();
+      cy.wait(1000);
+    });
 
-    // 9. Verifikasi Akhir
-    cy.contains('Pesanan Berhasil!').should('be.visible');
-    cy.contains('Nomor Pesanan Anda:').should('be.visible');
+    it('Berhasil mengakses halaman My Orders dan menampilkan nomor pesanan yang diawali TRS', () => {
+      cy.get('a[title="Pesanan Saya"]', { timeout: 10000 }).click();
+      cy.url({ timeout: 10000 }).should('include', '/my-orders');
+      
+      cy.contains('p', /^TRS-/, { timeout: 10000 }).should('be.visible');
+    });
+
+    it('Berhasil mengakses tab Riwayat Pembelian di halaman My Orders', () => {
+      cy.get('a[title="Pesanan Saya"]', { timeout: 10000 }).click();
+      cy.url({ timeout: 10000 }).should('include', '/my-orders');
+      
+      cy.contains('button', 'Riwayat Pembelian', { timeout: 10000 }).click();
+    });
+
+    it('Menampilkan badge jumlah pesanan di icon Pesanan Saya', () => {
+      cy.get('a[title="Pesanan Saya"] span', { timeout: 10000 }).should('be.visible');
+    });
+
+    it('Membuat pesanan, lalu verifikasi detail pesanan di My Orders', () => {
+      cy.get('a[title="Pesanan Saya"]').click();
+      cy.url().should('include', '/my-orders');
+      
+      cy.contains('p', /^TRS-/, { timeout: 10000 }).click();
+      
+      cy.contains('Total Pembayaran', { timeout: 5000 }).should('be.visible');
+    });
+  });
+
+  describe('Validasi Multiple Orders di My Orders', () => {
+    beforeEach(() => {
+      cy.visit('/');
+      cy.contains('button', 'Masuk', { timeout: 10000 }).click();
+      cy.get('input[type="email"]').clear().type('hilmiawananggoro189@gmail.com');
+      cy.get('input[type="password"]').clear().type('Tenetoperasator_180903');
+      cy.get('form').submit();
+      cy.url({ timeout: 10000 }).should('not.include', '/login');
+    });
+
+    it('Membuat 2 pesanan dan verifikasi keduanya muncul di My Orders', () => {
+      const orderNumbers = [];
+      
+      for (let i = 1; i <= 2; i++) {
+        cy.get('nav').contains('Katalog Produk').click();
+        cy.get('a[href^="/product/"]').first().click({ force: true });
+        
+        cy.on('window:alert', (text) => {
+          expect(text).to.contains('Berhasil');
+        });
+        cy.contains('button', 'Masukkan ke Keranjang').click();
+        
+        cy.get('[data-cy="tombol-keranjang-header"]').click({ force: true });
+        cy.contains('button', 'Checkout').click();
+        cy.contains('button', 'Proses Pesanan Sekarang').click();
+        
+        cy.contains('Pesanan Berhasil!', { timeout: 15000 }).should('be.visible');
+        
+        cy.contains('Nomor Pesanan Anda:').invoke('text').then((text) => {
+          const orderNumber = text.replace('Nomor Pesanan Anda:', '').trim();
+          orderNumbers.push(orderNumber);
+        });
+        
+        if (i < 2) {
+          cy.contains('button', 'Kembali ke Beranda').click();
+          cy.wait(1000);
+        }
+      }
+      
+      cy.contains('button', 'Kembali ke Beranda').click();
+      cy.wait(1000);
+      
+      cy.get('a[title="Pesanan Saya"]').click();
+      cy.url().should('include', '/my-orders');
+      
+      for (const orderNumber of orderNumbers) {
+        cy.contains('p', orderNumber, { timeout: 5000 }).should('be.visible');
+      }
+    });
   });
 });

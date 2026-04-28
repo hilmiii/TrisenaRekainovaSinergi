@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
+import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { 
   Beaker, 
@@ -51,6 +52,10 @@ export default function About() {
 
   return (
     <div className="min-h-screen pt-20">
+      <Helmet>
+        <title>Tentang Kami - PT Trisena Rekainova</title>
+        <link rel="canonical" href="https://trisena-rekainova-sinergi.com/about" />
+      </Helmet>
       {/* Hero */}
       <section className="bg-gradient-to-br from-gray-900 via-gray-800 to-teal-900 py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

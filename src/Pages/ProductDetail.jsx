@@ -97,6 +97,7 @@ export default function ProductDetail() {
         <meta property="og:title" content={product.name} />
         <meta property="og:description" content={product.short_description} />
         <meta property="og:image" content={formattedImageUrl} />
+        <link rel="canonical" href={`https://trisena-rekainova-sinergi.com/product/${productId}`} />
       </Helmet>
       {/* ---------------------------- */}
 

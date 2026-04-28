@@ -53,6 +53,7 @@ export default function Home() {
     <Helmet>
       <title>Beranda - PT Trisena Rekainova Sinergi</title>
       <meta name="description" content="Selamat datang di PT. Trisena Rekainova Sinergi. Kami adalah spesialis pembuatan dan perancangan Lemari Asam dan infrastruktur laboratorium." />
+      <link rel="canonical" href="https://trisena-rekainova-sinergi.com/" />
     </Helmet>
     {/* -------------------- */}
       {/* Hero Section */}
